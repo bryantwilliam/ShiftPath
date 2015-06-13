@@ -11,6 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ShiftPath extends JavaPlugin {
@@ -47,11 +48,38 @@ public class ShiftPath extends JavaPlugin {
 
             PlayerInventory inventory = player.getInventory();
             ItemStack itemInHand = inventory.getItemInHand();
+
+            HashMap<Integer, ? extends ItemStack> sticks = inventory.all(Material.STICK);
+            if (!sticks.isEmpty()) {
+                for (int stickIndex : sticks.keySet()) {
+                    ItemStack stick = sticks.get(stickIndex);
+                    List<String> stickLore = stick.getItemMeta().getLore();
+                    if (stickLore != null && stickLore.equals(wandLore)) {
+                        inventory.setItemInHand(stick);
+                        if (itemInHand != null) {
+                            inventory.setItem(stickIndex, itemInHand);
+                        }
+                        player.sendMessage(ChatColor.GREEN + "You already have a Selection Wand in your inventory. It has been swapped with the item in your hand.");
+                        return true;
+                    }
+                }
+
+            }
+
             if (itemInHand == null || itemInHand.getType() == Material.AIR) {
                 player.setItemInHand(wand);
             }
             else {
-                inventory.setItem(inventory.firstEmpty(), wand);
+                int slot = inventory.firstEmpty();
+                if (slot == -1) {
+                    player.getLocation().getWorld().dropItem(player.getLocation(), wand);
+                    player.sendMessage(ChatColor.RED + "No space in your inventory, dropped wand on floor.");
+                    return true;
+                }
+                else {
+                    inventory.setItem(slot, wand);
+                }
+
             }
             player.sendMessage(ChatColor.GREEN + "Selection Wand added to inventory");
             return true;
