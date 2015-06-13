@@ -27,7 +27,7 @@ public class ShiftPath extends JavaPlugin {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (label.equalsIgnoreCase("shiftpath") || label.equalsIgnoreCase("sp")) {
-            if (sender instanceof Player) {
+            if (!(sender instanceof Player)) {
                 sender.sendMessage(ChatColor.RED + "Error! You have to be a player to use this command!");
                 return true;
             }
