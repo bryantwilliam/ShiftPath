@@ -1,5 +1,6 @@
 package com.gmail.gogobebe2.shiftpath;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -15,14 +16,45 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ShiftPath extends JavaPlugin {
+    private static final ItemStack WAND = createWand();
+
     @Override
     public void onEnable() {
         getLogger().info("Starting up ShiftPath. If you need me to update this plugin, email at gogobebe2@gmail.com");
+        createWand();
+        Bukkit.getPluginManager().registerEvents(new SelectionListener(), this);
     }
 
     @Override
     public void onDisable() {
         getLogger().info("Disabling ShiftPath. If you need me to update this plugin, email at gogobebe2@gmail.com");
+    }
+
+
+    private static ItemStack createWand() {
+        ItemStack wand = new ItemStack(Material.STICK, 1);
+        ItemMeta wandMeta = wand.getItemMeta();
+        List<String> wandLore = new ArrayList<>();
+
+        wandMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.MAGIC + "[" + ChatColor.LIGHT_PURPLE
+                + ChatColor.BOLD + "Selection Wand" + ChatColor.BLUE + "" + ChatColor.MAGIC + "]");
+        wandLore.add(ChatColor.GREEN + "Left click to define a platform path.");
+        wandLore.add(ChatColor.AQUA + "Right click to set the path defined.");
+
+        wandMeta.setLore(wandLore);
+        wand.setItemMeta(wandMeta);
+        return wand;
+    }
+
+    public static boolean isItemWand(ItemStack stick) throws NullPointerException {
+        try {
+            List<String> stickLore = stick.getItemMeta().getLore();
+            return stickLore != null && stick.getType() == Material.STICK && stickLore.equals(WAND.getItemMeta().getLore());
+        }
+        catch (NullPointerException exc) {
+            exc.printStackTrace();
+            return false;
+        }
     }
 
     @Override
@@ -33,18 +65,7 @@ public class ShiftPath extends JavaPlugin {
                 return true;
             }
             Player player = (Player) sender;
-
-            ItemStack wand = new ItemStack(Material.STICK, 1);
-            ItemMeta wandMeta = wand.getItemMeta();
-            List<String> wandLore = new ArrayList<>();
-
-            wandMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.MAGIC + "[" + ChatColor.LIGHT_PURPLE
-                    + ChatColor.BOLD + "Selection Wand" + ChatColor.BLUE + "" + ChatColor.MAGIC + "]");
-            wandLore.add(ChatColor.GREEN + "Left click to define a platform path.");
-            wandLore.add(ChatColor.AQUA + "Right click to set the path defined.");
-
-            wandMeta.setLore(wandLore);
-            wand.setItemMeta(wandMeta);
+            ItemStack wand = WAND.clone();
 
             PlayerInventory inventory = player.getInventory();
             ItemStack itemInHand = inventory.getItemInHand();
@@ -53,8 +74,7 @@ public class ShiftPath extends JavaPlugin {
             if (!sticks.isEmpty()) {
                 for (int stickIndex : sticks.keySet()) {
                     ItemStack stick = sticks.get(stickIndex);
-                    List<String> stickLore = stick.getItemMeta().getLore();
-                    if (stickLore != null && stickLore.equals(wandLore)) {
+                    if (isItemWand(stick)) {
                         inventory.setItemInHand(stick);
                         if (itemInHand != null) {
                             inventory.setItem(stickIndex, itemInHand);
@@ -72,7 +92,7 @@ public class ShiftPath extends JavaPlugin {
             else {
                 int slot = inventory.firstEmpty();
                 if (slot == -1) {
-                    player.getLocation().getWorld().dropItem(player.getLocation(), wand);
+                    player.getLocation().getWorld().dropItemNaturally(player.getLocation(), wand);
                     player.sendMessage(ChatColor.RED + "No space in your inventory, dropped wand on floor.");
                     return true;
                 }
