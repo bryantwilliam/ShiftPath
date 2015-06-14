@@ -32,15 +32,20 @@ public class SelectionListener implements Listener {
                 path.add(block.getLocation());
                 paths.put(uuid, path);
 
-                player.sendMessage(ChatColor.DARK_GREEN + "Path number" + path.size() + " defined");
+                player.sendMessage(ChatColor.DARK_GREEN + "Point number " + path.size()
+                        + " defined for new path which has not been saved yet."
+                        + ChatColor.GREEN + " (Right click to save the path of selected points)");
             }
             else if ((action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK)) {
                 int pAmount = 0;
                 if (paths.get(uuid) != null) {
                     pAmount = paths.get(uuid).size();
                 }
+
                 // TODO: null
                 player.sendMessage(ChatColor.DARK_GREEN + "Saved path " + pAmount + " as path id " + null + " in config.yml");
+
+                paths.remove(uuid);
             }
         }
     }

@@ -38,8 +38,8 @@ public class ShiftPath extends JavaPlugin {
 
         wandMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.MAGIC + "[" + ChatColor.LIGHT_PURPLE
                 + ChatColor.BOLD + "Selection Wand" + ChatColor.BLUE + "" + ChatColor.MAGIC + "]");
-        wandLore.add(ChatColor.GREEN + "Left click to define a platform path.");
-        wandLore.add(ChatColor.AQUA + "Right click to set the path defined.");
+        wandLore.add(ChatColor.GREEN + "Left click to define a point in a new path.");
+        wandLore.add(ChatColor.AQUA + "Right click to save the path of defined points.");
 
         wandMeta.setLore(wandLore);
         wand.setItemMeta(wandMeta);
