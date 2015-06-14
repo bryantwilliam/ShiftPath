@@ -92,7 +92,7 @@ public class ShiftPath extends JavaPlugin {
             else {
                 int slot = inventory.firstEmpty();
                 if (slot == -1) {
-                    player.getLocation().getWorld().dropItemNaturally(player.getLocation(), wand);
+                    player.getLocation().getWorld().dropItemNaturally(player.getLocation().add(0, 0.5, 0), wand);
                     player.sendMessage(ChatColor.RED + "No space in your inventory, dropped wand on floor.");
                     return true;
                 }
@@ -101,6 +101,7 @@ public class ShiftPath extends JavaPlugin {
                 }
 
             }
+            player.updateInventory();
             player.sendMessage(ChatColor.GREEN + "Selection Wand added to inventory");
             return true;
         }
