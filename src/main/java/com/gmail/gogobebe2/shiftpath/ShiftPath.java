@@ -92,8 +92,7 @@ public class ShiftPath extends JavaPlugin {
             else {
                 int slot = inventory.firstEmpty();
                 if (slot == -1) {
-                    player.getLocation().getWorld().dropItemNaturally(player.getLocation().add(1, 1, 1), wand);
-                    player.sendMessage(ChatColor.RED + "No space in your inventory, dropped wand on floor.");
+                    player.sendMessage(ChatColor.RED + "Error! Not enough space in your inventory!");
                     return true;
                 }
                 else {
