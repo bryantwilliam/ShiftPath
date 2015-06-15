@@ -21,6 +21,7 @@ public class ShiftPath extends JavaPlugin {
     @Override
     public void onEnable() {
         getLogger().info("Starting up ShiftPath. If you need me to update this plugin, email at gogobebe2@gmail.com");
+        saveConfig();
         createWand();
         Bukkit.getPluginManager().registerEvents(new SelectionListener(), this);
     }
@@ -38,10 +39,11 @@ public class ShiftPath extends JavaPlugin {
 
         wandMeta.setDisplayName(ChatColor.BLUE + "" + ChatColor.MAGIC + "[" + ChatColor.LIGHT_PURPLE
                 + ChatColor.BOLD + "Selection Wand" + ChatColor.BLUE + "" + ChatColor.MAGIC + "]");
-        wandLore.add(ChatColor.GREEN + "Left click to define a point in a new path.");
-        wandLore.add(ChatColor.AQUA + "Right click to save the path of defined points.");
+        wandLore.add(ChatColor.GREEN + "Right click" + ChatColor.AQUA + " to define a the region of the platform that will move");
+        wandLore.add(ChatColor.GREEN + "Left click" + ChatColor.AQUA + " to define the path");
+        wandLore.add(ChatColor.AQUA + "Type " + ChatColor.GREEN + "/sp set" + ChatColor.AQUA + " to save selections made");
 
-        wandMeta.setLore(wandLore);
+                wandMeta.setLore(wandLore);
         wand.setItemMeta(wandMeta);
         return wand;
     }
@@ -64,45 +66,57 @@ public class ShiftPath extends JavaPlugin {
                 sender.sendMessage(ChatColor.RED + "Error! You have to be a player to use this command!");
                 return true;
             }
+
             Player player = (Player) sender;
-            ItemStack wand = WAND.clone();
 
-            PlayerInventory inventory = player.getInventory();
-            ItemStack itemInHand = inventory.getItemInHand();
+            if (args.length == 0) {
+                player.sendMessage("Welcome to this shit looking help menu I made in less than 30 seconds.");
+                player.sendMessage("To get a wand, type " + ChatColor.GREEN + "/sb wand");
+                player.sendMessage("After you've selected your regions with the wand, use " + "/sb ");
+            }
+            else if (args[0].equalsIgnoreCase("set")) {
 
-            HashMap<Integer, ? extends ItemStack> sticks = inventory.all(Material.STICK);
-            if (!sticks.isEmpty()) {
-                for (int stickIndex : sticks.keySet()) {
-                    ItemStack stick = sticks.get(stickIndex);
-                    if (isItemWand(stick)) {
-                        inventory.setItemInHand(stick);
-                        if (itemInHand != null) {
-                            inventory.setItem(stickIndex, itemInHand);
+            }
+            else if (args[0].equalsIgnoreCase("wand")) {
+                ItemStack wand = WAND.clone();
+
+                PlayerInventory inventory = player.getInventory();
+                ItemStack itemInHand = inventory.getItemInHand();
+
+                HashMap<Integer, ? extends ItemStack> sticks = inventory.all(Material.STICK);
+                if (!sticks.isEmpty()) {
+                    for (int stickIndex : sticks.keySet()) {
+                        ItemStack stick = sticks.get(stickIndex);
+                        if (isItemWand(stick)) {
+                            inventory.setItemInHand(stick);
+                            if (itemInHand != null) {
+                                inventory.setItem(stickIndex, itemInHand);
+                            }
+                            player.sendMessage(ChatColor.GREEN + "You already have a Selection Wand in your inventory. It has been swapped with the item in your hand.");
+                            return true;
                         }
-                        player.sendMessage(ChatColor.GREEN + "You already have a Selection Wand in your inventory. It has been swapped with the item in your hand.");
-                        return true;
                     }
+
                 }
 
-            }
-
-            if (itemInHand == null || itemInHand.getType() == Material.AIR) {
-                player.setItemInHand(wand);
-            }
-            else {
-                int slot = inventory.firstEmpty();
-                if (slot == -1) {
-                    player.sendMessage(ChatColor.RED + "Error! Not enough space in your inventory!");
-                    return true;
+                if (itemInHand == null || itemInHand.getType() == Material.AIR) {
+                    player.setItemInHand(wand);
                 }
                 else {
-                    inventory.setItem(slot, wand);
-                }
+                    int slot = inventory.firstEmpty();
+                    if (slot == -1) {
+                        player.sendMessage(ChatColor.RED + "Error! Not enough space in your inventory!");
+                        return true;
+                    }
+                    else {
+                        inventory.setItem(slot, wand);
+                    }
 
+                }
+                player.updateInventory();
+                player.sendMessage(ChatColor.GREEN + "Selection Wand added to inventory");
+                return true;
             }
-            player.updateInventory();
-            player.sendMessage(ChatColor.GREEN + "Selection Wand added to inventory");
-            return true;
         }
         return false;
     }
