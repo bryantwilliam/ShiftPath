@@ -30,11 +30,13 @@ public class SelectionListener implements Listener {
                 pathInProgress.createSelection(block.getLocation());
                 player.sendMessage(ChatColor.DARK_GREEN + (pathInProgress.getSelection2() == null ? "First" : "Second")
                         + " point for the cubic or trapezoid platform's region defined.");
+                event.setCancelled(true);
             }
             else if (action == Action.LEFT_CLICK_BLOCK) {
                 List<Location> path = pathInProgress.getPath();
                 path.add(block.getLocation());
                 player.sendMessage(ChatColor.DARK_GREEN + "Path point number " + path.size() + " defined");
+                event.setCancelled(true);
             }
         }
     }
