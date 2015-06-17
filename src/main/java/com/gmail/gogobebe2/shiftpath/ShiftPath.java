@@ -23,7 +23,7 @@ public class ShiftPath extends JavaPlugin {
         getLogger().info("Starting up ShiftPath. If you need me to update this plugin, email at gogobebe2@gmail.com");
         saveConfig();
         createWand();
-        Bukkit.getPluginManager().registerEvents(new SelectionListener(), this);
+        Bukkit.getPluginManager().registerEvents(new SelectionListener(this), this);
     }
 
     @Override
@@ -72,10 +72,13 @@ public class ShiftPath extends JavaPlugin {
             if (args.length == 0) {
                 player.sendMessage("Welcome to this shit looking help menu I made in less than 30 seconds.");
                 player.sendMessage("To get a wand, type " + ChatColor.GREEN + "/sb wand");
-                player.sendMessage("After you've selected your regions with the wand, use " + "/sb ");
+                player.sendMessage("After you've selected your regions and paths with the wand, use " + "/sb ");
+                return true;
             }
             else if (args[0].equalsIgnoreCase("set")) {
-
+                PathInProgress.getPathInProgress(player, this).save();
+                player.sendMessage(ChatColor.GREEN + "Saved path in config.");
+                return true;
             }
             else if (args[0].equalsIgnoreCase("wand")) {
                 ItemStack wand = WAND.clone();

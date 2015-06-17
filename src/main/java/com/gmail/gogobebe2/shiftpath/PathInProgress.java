@@ -12,11 +12,14 @@ public class PathInProgress {
     private static Set<PathInProgress> pathsInProgress = new HashSet<>();
 
     private List<Location> path = new ArrayList<>();
-    private final Location[] region = new Location[2];
+    private Location selection1 = null;
+    private Location selection2 = null;
     private Player owner;
+    private ShiftPath plugin;
 
-    public PathInProgress(Player owner) {
+    private PathInProgress(Player owner, ShiftPath plugin) {
         this.owner = owner;
+        this.plugin = plugin;
         pathsInProgress.add(this);
     }
 
@@ -25,7 +28,9 @@ public class PathInProgress {
     }
 
     public void save() {
-        // TODO: save to config
+        // TODO: null
+        plugin.getConfig().set("Paths." + null, null);
+        plugin.saveConfig();
         pathsInProgress.remove(this);
     }
 
@@ -33,12 +38,36 @@ public class PathInProgress {
         return this.path;
     }
 
-    public Location[] getRegion() {
-        return this.region;
+    public Location getSelection1() {
+        return selection1;
     }
 
-    public static Set<PathInProgress> getPathsInProgress() {
-        return pathsInProgress;
+    public Location getSelection2() {
+        return selection2;
+    }
+
+    public void createSelection(Location selection) {
+        if (selection1 == null) {
+            selection1 = selection;
+        }
+        else if (selection2 == null) {
+            selection2 = selection;
+        }
+        else {
+            selection2 = null;
+            selection1 = selection;
+        }
+    }
+
+    public static PathInProgress getPathInProgress(Player owner, ShiftPath plugin) {
+        for (PathInProgress path : pathsInProgress) {
+            if (path.getOwner().getUniqueId().equals(owner.getUniqueId())) {
+                return path;
+            }
+        }
+        PathInProgress path = new PathInProgress(owner, plugin);
+        pathsInProgress.add(path);
+        return path;
     }
 
 }
