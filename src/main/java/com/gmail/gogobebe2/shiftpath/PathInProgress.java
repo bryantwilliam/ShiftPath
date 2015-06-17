@@ -25,15 +25,18 @@ public class PathInProgress {
     }
 
     public void save() {
-        Set<String> paths = plugin.getConfig().getConfigurationSection("Paths").getKeys(false);
         int id = 0;
-        if (!paths.isEmpty()) {
-            Set<Integer> ids = new HashSet<>(paths.size());
-            for (String pID : paths) ids.add(Integer.parseInt(pID));
-            id = Collections.max(ids) + 1;
+        if (plugin.getConfig().isSet("Paths")) {
+            Set<String> paths = plugin.getConfig().getConfigurationSection("Paths").getKeys(false);
+            if (!paths.isEmpty()) {
+                Set<Integer> ids = new HashSet<>(paths.size());
+                for (String pID : paths) ids.add(Integer.parseInt(pID));
+                id = Collections.max(ids) + 1;
+            }
         }
         plugin.getConfig().set("Paths." + id + ".sel1", selection1);
         plugin.getConfig().set("Paths." + id + ".sel2", selection2);
+        plugin.getConfig().set("Paths." + id + ".path", path);
         plugin.saveConfig();
         pathsInProgress.remove(this);
     }
