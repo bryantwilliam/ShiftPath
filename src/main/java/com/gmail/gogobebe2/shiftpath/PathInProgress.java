@@ -3,10 +3,7 @@ package com.gmail.gogobebe2.shiftpath;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class PathInProgress {
     private static Set<PathInProgress> pathsInProgress = new HashSet<>();
@@ -28,8 +25,15 @@ public class PathInProgress {
     }
 
     public void save() {
-        // TODO: null
-        plugin.getConfig().set("Paths." + null, null);
+        Set<String> paths = plugin.getConfig().getConfigurationSection("Paths").getKeys(false);
+        int id = 0;
+        if (!paths.isEmpty()) {
+            Set<Integer> ids = new HashSet<>(paths.size());
+            for (String pID : paths) ids.add(Integer.parseInt(pID));
+            id = Collections.max(ids) + 1;
+        }
+        plugin.getConfig().set("Paths." + id + ".sel1", selection1);
+        plugin.getConfig().set("Paths." + id + ".sel2", selection2);
         plugin.saveConfig();
         pathsInProgress.remove(this);
     }
@@ -49,11 +53,9 @@ public class PathInProgress {
     public void createSelection(Location selection) {
         if (selection1 == null) {
             selection1 = selection;
-        }
-        else if (selection2 == null) {
+        } else if (selection2 == null) {
             selection2 = selection;
-        }
-        else {
+        } else {
             selection2 = null;
             selection1 = selection;
         }
