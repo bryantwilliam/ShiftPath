@@ -21,7 +21,7 @@ public class ShiftPath extends JavaPlugin {
     @Override
     public void onEnable() {
         getLogger().info("Starting up ShiftPath. If you need me to update this plugin, email at gogobebe2@gmail.com");
-        saveConfig();
+        saveDefaultConfig();
         createWand();
         Bukkit.getPluginManager().registerEvents(new SelectionListener(this), this);
     }
@@ -42,8 +42,7 @@ public class ShiftPath extends JavaPlugin {
         wandLore.add(ChatColor.GREEN + "Right click" + ChatColor.AQUA + " to define a the region ");
         wandLore.add(ChatColor.AQUA + " of the platform that will move.");
         wandLore.add(ChatColor.GREEN + "Left click" + ChatColor.AQUA + " to define the path");
-        wandLore.add(ChatColor.GREEN + "Type " + ChatColor.DARK_GREEN + "/sp set");
-        wandLore.add(ChatColor.AQUA + " to save selections made");
+        wandLore.add(ChatColor.GREEN + "Type " + ChatColor.DARK_GREEN + "/sp set" + ChatColor.AQUA + " to save selections made");
 
                 wandMeta.setLore(wandLore);
         wand.setItemMeta(wandMeta);
