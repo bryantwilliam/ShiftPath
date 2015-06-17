@@ -42,7 +42,7 @@ public class ShiftPath extends JavaPlugin {
         wandLore.add(ChatColor.GREEN + "Right click" + ChatColor.AQUA + " to define a the region ");
         wandLore.add(ChatColor.AQUA + " of the platform that will move.");
         wandLore.add(ChatColor.GREEN + "Left click" + ChatColor.AQUA + " to define the path");
-        wandLore.add(ChatColor.AQUA + "Type " + ChatColor.GREEN + "/sp set");
+        wandLore.add(ChatColor.GREEN + "Type " + ChatColor.DARK_GREEN + "/sp set");
         wandLore.add(ChatColor.AQUA + " to save selections made");
 
                 wandMeta.setLore(wandLore);
@@ -74,7 +74,7 @@ public class ShiftPath extends JavaPlugin {
             if (args.length == 0) {
                 player.sendMessage("Welcome to this shit looking help menu I made in less than 30 seconds.");
                 player.sendMessage("To get a wand, type " + ChatColor.GREEN + "/sp wand");
-                player.sendMessage("After you've selected your regions and paths with the wand, use " + "/sp ");
+                player.sendMessage("After you've selected your regions and paths with the wand, use " + "/sp set");
                 return true;
             }
             else if (args[0].equalsIgnoreCase("set")) {
