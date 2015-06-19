@@ -1,5 +1,6 @@
 package com.gmail.gogobebe2.shiftpath;
 
+import com.gmail.gogobebe2.shiftpath.path.PathInConstruction;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -77,7 +78,7 @@ public class ShiftPath extends JavaPlugin {
                 return true;
             }
             else if (args[0].equalsIgnoreCase("set")) {
-                PathInProgress.getPathInProgress(player, this).save();
+                PathInConstruction.getPathInProgress(player, this).save();
                 player.sendMessage(ChatColor.GREEN + "Saved path in config.");
                 return true;
             }

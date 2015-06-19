@@ -1,5 +1,6 @@
 package com.gmail.gogobebe2.shiftpath;
 
+import com.gmail.gogobebe2.shiftpath.path.PathInConstruction;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -25,15 +26,15 @@ public class SelectionListener implements Listener {
         if (ShiftPath.isItemWand(player.getItemInHand())) {
             Action action = event.getAction();
             Block block = event.getClickedBlock();
-            PathInProgress pathInProgress = PathInProgress.getPathInProgress(player, plugin);
+            PathInConstruction pathInConstruction = PathInConstruction.getPathInProgress(player, plugin);
             if (action == Action.RIGHT_CLICK_BLOCK) {
-                pathInProgress.createSelection(block.getLocation());
-                player.sendMessage(ChatColor.DARK_GREEN + (pathInProgress.getSelection2() == null ? "First" : "Second")
+                pathInConstruction.createSelection(block.getLocation());
+                player.sendMessage(ChatColor.DARK_GREEN + (pathInConstruction.getSelection2() == null ? "First" : "Second")
                         + " point for the cubic or trapezoid platform's region defined.");
                 event.setCancelled(true);
             }
             else if (action == Action.LEFT_CLICK_BLOCK) {
-                List<Location> path = pathInProgress.getPath();
+                List<Location> path = pathInConstruction.getPath();
                 path.add(block.getLocation());
                 player.sendMessage(ChatColor.DARK_GREEN + "Path point number " + path.size() + " defined");
                 event.setCancelled(true);
