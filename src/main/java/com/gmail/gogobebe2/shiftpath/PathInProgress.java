@@ -34,10 +34,14 @@ public class PathInProgress {
                 id = Collections.max(ids) + 1;
             }
         }
-        plugin.getConfig().set("Paths." + id + ".sel1", selection1);
-        plugin.getConfig().set("Paths." + id + ".sel2", selection2);
-        plugin.getConfig().set("Paths." + id + ".path", path);
-        plugin.saveConfig();
+        new LocationData(selection1, plugin).saveToConfig("Paths." + id + ".sel1");
+        new LocationData(selection2, plugin).saveToConfig("Paths." + id + ".sel2");
+        String latestPathID = Collections.max(plugin.getConfig().getConfigurationSection("Paths." + id + "path").getKeys(false));
+        for (int p = 0; p < path.size(); p++) {
+            Location point = path.get(p);
+            new LocationData(point, plugin).saveToConfig("Paths." + id + ".path." + Integer.parseInt(latestPathID.split("path")[1]) + p);
+        }
+
         pathsInProgress.remove(this);
     }
 
