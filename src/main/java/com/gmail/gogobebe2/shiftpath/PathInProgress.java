@@ -26,19 +26,20 @@ public class PathInProgress {
 
     public void save() {
         int id = 0;
-        String latestPathID = "point0";
+        int latestPathID = 0;
         if (plugin.getConfig().isSet("Paths")) {
             Set<String> paths = plugin.getConfig().getConfigurationSection("Paths").getKeys(false);
             if (!paths.isEmpty()) {
                 id = Integer.parseInt(Collections.max(paths)) + 1;
-                latestPathID = Collections.max(paths);
+                String latestPoint = Collections.max(paths);
+                latestPathID = Integer.parseInt(latestPoint.substring(latestPoint.length() - 1));
             }
         }
         new LocationData(selection1, plugin).saveToConfig("Paths." + id + ".sel1");
         new LocationData(selection2, plugin).saveToConfig("Paths." + id + ".sel2");
         for (int p = 0; p < path.size(); p++) {
             Location point = path.get(p);
-            new LocationData(point, plugin).saveToConfig("Paths." + id + ".path.point" + Integer.parseInt(latestPathID.substring(latestPathID.length() - 1)) + p);
+            new LocationData(point, plugin).saveToConfig("Paths." + id + ".path.point" + latestPathID + p);
         }
 
         pathsInProgress.remove(this);
