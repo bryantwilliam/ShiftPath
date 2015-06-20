@@ -6,7 +6,7 @@ import org.bukkit.Location;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Path {
+public abstract class Path {
     private List<Location> path = new ArrayList<>();
     private Location selection1 = null;
     private Location selection2 = null;
