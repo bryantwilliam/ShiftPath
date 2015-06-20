@@ -37,7 +37,7 @@ public class PathInConstruction extends Path {
             new LocationData(getSelection2(), getPlugin()).saveToConfig("Paths." + id + ".sel2");
             for (int p = 0; p < getPath().size(); p++) {
                 Location point = getPath().get(p);
-                new LocationData(point, getPlugin()).saveToConfig("Paths." + id + ".path.point" + latestPathID + p);
+                new LocationData(point, getPlugin()).saveToConfig("Paths." + id + ".path.point" + (latestPathID + p));
             }
 
             pathsInConstruction.remove(this);
