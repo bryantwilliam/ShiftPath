@@ -21,25 +21,31 @@ public class PathInConstruction extends Path {
         return this.owner;
     }
 
-    public void save() {
-        int id = 0;
-        int latestPathID = 0;
-        if (getPlugin().getConfig().isSet("Paths")) {
-            Set<String> paths = getPlugin().getConfig().getConfigurationSection("Paths").getKeys(false);
-            if (!paths.isEmpty()) {
-                id = Integer.parseInt(Collections.max(paths)) + 1;
-                String latestPoint = Collections.max(paths);
-                latestPathID = Integer.parseInt(latestPoint.substring(latestPoint.length() - 1));
+    public boolean save() {
+        if (getSelection1() != null && getSelection2() != null && getPath().size() > 0) {
+            int id = 0;
+            int latestPathID = 0;
+            if (getPlugin().getConfig().isSet("Paths")) {
+                Set<String> paths = getPlugin().getConfig().getConfigurationSection("Paths").getKeys(false);
+                if (!paths.isEmpty()) {
+                    id = Integer.parseInt(Collections.max(paths)) + 1;
+                    String latestPoint = Collections.max(paths);
+                    latestPathID = Integer.parseInt(latestPoint.substring(latestPoint.length() - 1));
+                }
             }
-        }
-        new LocationData(getSelection1(), getPlugin()).saveToConfig("Paths." + id + ".sel1");
-        new LocationData(getSelection2(), getPlugin()).saveToConfig("Paths." + id + ".sel2");
-        for (int p = 0; p < getPath().size(); p++) {
-            Location point = getPath().get(p);
-            new LocationData(point, getPlugin()).saveToConfig("Paths." + id + ".path.point" + latestPathID + p);
-        }
+            new LocationData(getSelection1(), getPlugin()).saveToConfig("Paths." + id + ".sel1");
+            new LocationData(getSelection2(), getPlugin()).saveToConfig("Paths." + id + ".sel2");
+            for (int p = 0; p < getPath().size(); p++) {
+                Location point = getPath().get(p);
+                new LocationData(point, getPlugin()).saveToConfig("Paths." + id + ".path.point" + latestPathID + p);
+            }
 
-        pathsInConstruction.remove(this);
+            pathsInConstruction.remove(this);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
 

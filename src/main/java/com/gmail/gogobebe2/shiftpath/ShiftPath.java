@@ -78,8 +78,13 @@ public class ShiftPath extends JavaPlugin {
                 return true;
             }
             else if (args[0].equalsIgnoreCase("set")) {
-                PathInConstruction.getPathInProgress(player, this).save();
-                player.sendMessage(ChatColor.GREEN + "Saved path in config.");
+                if (PathInConstruction.getPathInProgress(player, this).save()) {
+                    player.sendMessage(ChatColor.GREEN + "Saved path in config.");
+                }
+                else {
+                    player.sendMessage(ChatColor.RED + "Error! You have not defined the required points to set a new path.");
+                }
+
                 return true;
             }
             else if (args[0].equalsIgnoreCase("wand")) {
