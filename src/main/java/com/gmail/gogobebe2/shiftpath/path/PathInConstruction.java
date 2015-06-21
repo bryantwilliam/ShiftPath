@@ -75,11 +75,7 @@ public class PathInConstruction extends Path {
         return path;
     }
 
-    public void setSelection1(Location selection1) {
-        this.selection1 = selection1;
-    }
-
-    public Location getSelection2() {
-        return selection2;
+    public boolean isRegionDefined() {
+        return selection2 != null;
     }
 }

@@ -30,6 +30,7 @@ public class Platform {
     }
 
     public void move(Location destination) {
+        // TODO: use in ActivePath.
         int xDistance = destination.getBlockX() - center.getBlockX();
         int yDistance = destination.getBlockY() - center.getBlockY();
         int zDistance = destination.getBlockZ() - center.getBlockZ();

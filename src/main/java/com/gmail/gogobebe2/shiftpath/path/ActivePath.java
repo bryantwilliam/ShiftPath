@@ -13,18 +13,10 @@ public class ActivePath extends Path {
     private Location currentPoint;
     private Platform platform;
 
-    public Platform getPlatform() {
-        return platform;
-    }
-
-    public void setPlatform(Platform platform) {
-        this.platform = platform;
-    }
-
     public ActivePath(ShiftPath plugin, int pathID) {
         super(plugin);
-        setPlatform(new Platform(new LocationData("Paths." + pathID + ".sel1", getPlugin()).getLocation(),
-                new LocationData("Paths." + pathID + ".sel2", getPlugin()).getLocation()));
+        platform = new Platform(new LocationData("Paths." + pathID + ".sel1", getPlugin()).getLocation(),
+                new LocationData("Paths." + pathID + ".sel2", getPlugin()).getLocation());
         for (String pointKey : getPlugin().getConfig().getConfigurationSection("Paths." + pathID + ".path").getKeys(false)) {
             getPath().clear();
             getPath().add(new LocationData("Paths." + pathID + ".path." + pointKey, getPlugin()).getLocation());

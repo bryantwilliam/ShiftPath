@@ -29,7 +29,7 @@ public class SelectionListener implements Listener {
             PathInConstruction pathInConstruction = PathInConstruction.getPathInProgress(player, plugin);
             if (action == Action.RIGHT_CLICK_BLOCK) {
                 pathInConstruction.createSelection(block.getLocation());
-                player.sendMessage(ChatColor.DARK_GREEN + (pathInConstruction.getSelection2() == null ? "First" : "Second")
+                player.sendMessage(ChatColor.DARK_GREEN + (pathInConstruction.isRegionDefined() ? "Second" : "First")
                         + " point for the cubic or trapezoid platform's region defined.");
                 event.setCancelled(true);
             }
