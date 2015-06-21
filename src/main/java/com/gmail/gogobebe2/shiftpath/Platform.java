@@ -35,14 +35,17 @@ public class Platform {
         int yDistance = destination.getBlockY() - center.getBlockY();
         int zDistance = destination.getBlockZ() - center.getBlockZ();
 
+        Set<Block> newBlocks = new HashSet<>();
         for (Block block : blocks) {
             Block newBlock = block.getWorld().getBlockAt(block.getLocation().clone().add(xDistance, yDistance, zDistance));
             newBlock.setType(block.getType());
             newBlock.getState().setData(block.getState().getData());
             newBlock.getState().update();
             block.setType(Material.AIR);
+            newBlocks.add(block);
         }
 
+        blocks = newBlocks;
         center = center.clone().add(xDistance, yDistance, zDistance);
         selection1 = selection1.clone().add(xDistance, yDistance, zDistance);
         selection2 = selection2.clone().add(xDistance, yDistance, zDistance);
