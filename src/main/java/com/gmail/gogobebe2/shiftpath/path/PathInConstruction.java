@@ -5,11 +5,15 @@ import com.gmail.gogobebe2.shiftpath.ShiftPath;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PathInConstruction extends Path {
     private static Set<PathInConstruction> pathsInConstruction = new HashSet<>();
     private Player owner;
+    private Location selection1;
+    private Location selection2;
 
     private PathInConstruction(Player owner, ShiftPath plugin) {
         super(plugin);
@@ -22,7 +26,7 @@ public class PathInConstruction extends Path {
     }
 
     public boolean save() {
-        if (getSelection1() != null && getSelection2() != null && getPath().size() > 0) {
+        if (selection1 != null && selection2 != null && getPath().size() > 0) {
             int id = 0;
             int latestPathID = 0;
             if (getPlugin().getConfig().isSet("Paths")) {
@@ -33,8 +37,8 @@ public class PathInConstruction extends Path {
                     latestPathID = Integer.parseInt(latestPoint.substring(latestPoint.length() - 1));
                 }
             }
-            new LocationData(getSelection1(), getPlugin()).saveToConfig("Paths." + id + ".sel1");
-            new LocationData(getSelection2(), getPlugin()).saveToConfig("Paths." + id + ".sel2");
+            new LocationData(selection1, getPlugin()).saveToConfig("Paths." + id + ".selection1");
+            new LocationData(selection2, getPlugin()).saveToConfig("Paths." + id + ".selection2");
             for (int p = 0; p < getPath().size(); p++) {
                 Location point = getPath().get(p);
                 new LocationData(point, getPlugin()).saveToConfig("Paths." + id + ".path.point" + (latestPathID + p));
@@ -42,23 +46,22 @@ public class PathInConstruction extends Path {
 
             pathsInConstruction.remove(this);
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
 
 
-
     public void createSelection(Location selection) {
-        if (getSelection1() == null) {
-            setSelection1(selection);
-        } else if (getSelection2() == null) {
-            setSelection2(selection);
+        if (selection1 == null) {
+            selection1 = selection;
+        } else if (selection2 == null) {
+            selection2 = selection;
         } else {
-            setSelection2(null);
-            setSelection1(selection);
+            selection1 = selection;
+            selection2 = null;
         }
+
     }
 
     public static PathInConstruction getPathInProgress(Player owner, ShiftPath plugin) {
@@ -70,5 +73,13 @@ public class PathInConstruction extends Path {
         PathInConstruction path = new PathInConstruction(owner, plugin);
         pathsInConstruction.add(path);
         return path;
+    }
+
+    public void setSelection1(Location selection1) {
+        this.selection1 = selection1;
+    }
+
+    public Location getSelection2() {
+        return selection2;
     }
 }

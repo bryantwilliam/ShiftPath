@@ -25,6 +25,7 @@ public class ShiftPath extends JavaPlugin {
         saveDefaultConfig();
         createWand();
         Bukkit.getPluginManager().registerEvents(new SelectionListener(this), this);
+        // TODO: Create a runnable that repeatedly moves the platforms once per second.
     }
 
     @Override
