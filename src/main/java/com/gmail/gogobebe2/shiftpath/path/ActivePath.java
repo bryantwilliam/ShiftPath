@@ -30,6 +30,7 @@ public class ActivePath extends Path {
             getPath().add(new LocationData("Paths." + pathID + ".path." + pointKey, getPlugin()).getLocation());
         }
         currentPoint = getPath().get(0);
+        activePaths.add(this);
     }
 
     public void approachNextPoint() {
