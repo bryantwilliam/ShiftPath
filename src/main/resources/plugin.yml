@@ -1,5 +1,5 @@
 name: ShiftPath
-version: 1.7.7-DEVELOPMENT-SNAPSHOT
+version: 1.7.8-DEVELOPMENT-SNAPSHOT
 main: com.gmail.gogobebe2.shiftpath.ShiftPath
 description: Make a path that shifts around.
 author: William Bryant (gogobebe2)
