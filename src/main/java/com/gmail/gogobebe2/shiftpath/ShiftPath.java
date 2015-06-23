@@ -28,17 +28,19 @@ public class ShiftPath extends JavaPlugin {
         createWand();
         Bukkit.getPluginManager().registerEvents(new SelectionListener(this), this);
 
-        for (String id : getConfig().getConfigurationSection("Paths").getKeys(false)) {
-            activePaths.add(new ActivePath(Integer.parseInt(id), this));
-        }
-        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-            @Override
-            public void run() {
-                for (ActivePath activePath : activePaths) {
-                    activePath.approachNextPoint();
-                }
+        if (getConfig().isSet("Paths")) {
+            for (String id : getConfig().getConfigurationSection("Paths").getKeys(false)) {
+                activePaths.add(new ActivePath(Integer.parseInt(id), this));
             }
-        }, 0L, 20L);
+            Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+                @Override
+                public void run() {
+                    for (ActivePath activePath : activePaths) {
+                        activePath.approachNextPoint();
+                    }
+                }
+            }, 0L, 20L);
+        }
     }
 
     @Override
