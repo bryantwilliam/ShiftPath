@@ -23,6 +23,9 @@ public class Platform {
                 for (int z = selection1.getBlockZ(); z < selection2.getBlockZ() + 1; z++) {
                     structure.add(selection1.getWorld().getBlockAt(x, y, z));
                     centerX += x; centerY += y; centerZ += z;
+                    Bukkit.broadcastMessage("x: " + centerX);
+                    Bukkit.broadcastMessage("y: " + centerY);
+                    Bukkit.broadcastMessage("z: " + centerZ);
                 }
             }
         }
