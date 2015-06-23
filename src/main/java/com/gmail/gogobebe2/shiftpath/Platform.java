@@ -48,20 +48,18 @@ public class Platform {
             Bukkit.broadcastMessage("block.getLocation(): " + block.getLocation());
             newBlock.setType(block.getType());
             Bukkit.broadcastMessage("block.getType(): " + block.getType());
-            newBlock.getState().setData(block.getState().getData());
             newBlock.getState().update();
             block.setType(Material.AIR);
             block.getState().update();
             blocks.add(newBlock);
-            blocks.remove(block);
         }
 
         structure = blocks;
         center = center.clone().add(xDistance, yDistance, zDistance);
         Bukkit.broadcastMessage("center: " + center);
-        selection1 = selection1.clone().add(xDistance, yDistance, zDistance);
+        selection1 = selection1.add(xDistance, yDistance, zDistance);
         Bukkit.broadcastMessage("selection1: " + selection1);
-        selection2 = selection2.clone().add(xDistance, yDistance, zDistance);
+        selection2 = selection2.add(xDistance, yDistance, zDistance);
         Bukkit.broadcastMessage("selection2: " + selection2);
     }
 
