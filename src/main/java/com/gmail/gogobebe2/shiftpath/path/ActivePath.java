@@ -10,10 +10,10 @@ import java.util.Set;
 
 public class ActivePath extends Path {
     private static Set<ActivePath> activePaths = new HashSet<>();
-    private Location currentPoint;
     private Platform platform;
+    private int currentGoalIndex = 0;
 
-    public ActivePath(ShiftPath plugin, int pathID) {
+    public ActivePath(int pathID, ShiftPath plugin) {
         super(plugin);
         platform = new Platform(new LocationData("Paths." + pathID + ".sel1", getPlugin()).getLocation(),
                 new LocationData("Paths." + pathID + ".sel2", getPlugin()).getLocation());
@@ -21,13 +21,46 @@ public class ActivePath extends Path {
             getPath().clear();
             getPath().add(new LocationData("Paths." + pathID + ".path." + pointKey, getPlugin()).getLocation());
         }
-        currentPoint = getPath().get(0);
         activePaths.add(this);
     }
 
     public void approachNextPoint() {
-        // TODO: platform.move();
-        // TODO: if platform center is now at the next point, create a new point.
-        // TODO: if the current point is the last point, go to the first point.
+        if (platform.getCenter().getBlock().getLocation().distance(getPath().get(currentGoalIndex).getBlock().getLocation()) == 0) {
+            // The goal as been reached.
+            if (currentGoalIndex == getPath().size() - 1) {
+                currentGoalIndex = 0;
+            } else {
+                currentGoalIndex++;
+            }
+        } else {
+            Location currentGoal = getPath().get(currentGoalIndex).getBlock().getLocation();
+            Location center = platform.getCenter().getBlock().getLocation();
+            int xfactor = 0;
+            int yfactor = 0;
+            int zfactor = 0;
+
+            if (center.getBlockX() < currentGoal.getBlockX()) {
+                xfactor = 1;
+            }
+            else if (center.getBlockX() > currentGoal.getBlockX()) {
+                xfactor = -1;
+            }
+
+            if (center.getBlockY() < currentGoal.getBlockY()) {
+                yfactor = 1;
+            }
+            else if (center.getBlockY() > currentGoal.getBlockY()) {
+                yfactor = -1;
+            }
+
+            if (center.getBlockZ() < currentGoal.getBlockZ()) {
+                zfactor = 1;
+            }
+            else if (center.getBlockZ() > currentGoal.getBlockZ()) {
+                zfactor = -1;
+            }
+
+            platform.move(center.clone().add(xfactor, yfactor, zfactor));
+        }
     }
 }

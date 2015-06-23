@@ -1,5 +1,6 @@
 package com.gmail.gogobebe2.shiftpath;
 
+import com.gmail.gogobebe2.shiftpath.path.ActivePath;
 import com.gmail.gogobebe2.shiftpath.path.PathInConstruction;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,6 +19,7 @@ import java.util.List;
 
 public class ShiftPath extends JavaPlugin {
     private static final ItemStack WAND = createWand();
+    private List<ActivePath> activePaths = new ArrayList<>();
 
     @Override
     public void onEnable() {
@@ -25,7 +27,18 @@ public class ShiftPath extends JavaPlugin {
         saveDefaultConfig();
         createWand();
         Bukkit.getPluginManager().registerEvents(new SelectionListener(this), this);
-        // TODO: Create a runnable that repeatedly moves the platforms once per second.
+
+        for (String id : getConfig().getConfigurationSection("Paths").getKeys(false)) {
+            activePaths.add(new ActivePath(Integer.parseInt(id), this));
+        }
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+            @Override
+            public void run() {
+                for (ActivePath activePath : activePaths) {
+                    activePath.approachNextPoint();
+                }
+            }
+        }, 0L, 20L);
     }
 
     @Override
@@ -75,7 +88,9 @@ public class ShiftPath extends JavaPlugin {
             if (args.length == 0) {
                 player.sendMessage("Welcome to this shit looking help menu I made in less than 30 seconds.");
                 player.sendMessage("To get a wand, type " + ChatColor.GREEN + "/sp wand");
-                player.sendMessage("After you've selected your regions and paths with the wand, use " + "/sp set");
+                player.sendMessage("After you've selected your regions and paths with the wand, use "
+                        + ChatColor.GREEN + "/sp set"
+                        + ChatColor.RESET + " and restart the server for it to take effect.");
                 return true;
             }
             else if (args[0].equalsIgnoreCase("set")) {
@@ -85,7 +100,6 @@ public class ShiftPath extends JavaPlugin {
                 else {
                     player.sendMessage(ChatColor.RED + "Error! You have not defined the required points to set a new path.");
                 }
-
                 return true;
             }
             else if (args[0].equalsIgnoreCase("wand")) {

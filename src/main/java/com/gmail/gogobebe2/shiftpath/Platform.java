@@ -50,4 +50,8 @@ public class Platform {
         selection1 = selection1.clone().add(xDistance, yDistance, zDistance);
         selection2 = selection2.clone().add(xDistance, yDistance, zDistance);
     }
+
+    public Location getCenter() {
+        return center;
+    }
 }
