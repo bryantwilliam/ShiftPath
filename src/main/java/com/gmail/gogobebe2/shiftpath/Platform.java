@@ -25,7 +25,10 @@ public class Platform {
                 }
             }
         }
-        centerX /= blocks.size(); centerY /= blocks.size(); centerZ /= blocks.size();
+        if (centerX != 0) centerX /= blocks.size();
+        if (centerY != 0) centerY /= blocks.size();
+        if (centerY != 0) centerZ /= blocks.size();
+
         this.center = selection1.getWorld().getBlockAt(centerX, centerY, centerZ).getLocation();
     }
 
