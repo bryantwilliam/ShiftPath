@@ -19,7 +19,6 @@ import java.util.List;
 
 public class ShiftPath extends JavaPlugin {
     private static final ItemStack WAND = createWand();
-    private List<ActivePath> activePaths = new ArrayList<>();
 
     @Override
     public void onEnable() {
@@ -30,12 +29,12 @@ public class ShiftPath extends JavaPlugin {
 
         if (getConfig().isSet("Paths")) {
             for (String id : getConfig().getConfigurationSection("Paths").getKeys(false)) {
-                activePaths.add(new ActivePath(Integer.parseInt(id), this));
+                ActivePath.getActivePaths().add(new ActivePath(Integer.parseInt(id), this));
             }
             Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
                 @Override
                 public void run() {
-                    for (ActivePath activePath : activePaths) {
+                    for (ActivePath activePath : ActivePath.getActivePaths()) {
                         activePath.approachNextPoint();
                     }
                 }

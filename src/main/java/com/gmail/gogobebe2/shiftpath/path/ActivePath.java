@@ -70,4 +70,8 @@ public class ActivePath extends Path {
             platform.move(center.clone().add(xfactor, yfactor, zfactor));
         }
     }
+
+    public static Set<ActivePath> getActivePaths() {
+        return activePaths;
+    }
 }
