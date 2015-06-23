@@ -40,11 +40,14 @@ public class Platform {
         Bukkit.broadcastMessage("xDis: " + xDistance);
         Bukkit.broadcastMessage("yDis: " + yDistance);
         Bukkit.broadcastMessage("zDis: " + zDistance);
+        Bukkit.broadcastMessage("---------------------");
 
         Set<Block> blocks = new HashSet<>();
         for (Block block : structure) {
             Block newBlock = block.getWorld().getBlockAt(block.getLocation().clone().add(xDistance, yDistance, zDistance));
+            Bukkit.broadcastMessage("block.getLocation(): " + block.getLocation());
             newBlock.setType(block.getType());
+            Bukkit.broadcastMessage("block.getType(): " + block.getType());
             newBlock.getState().setData(block.getState().getData());
             newBlock.getState().update();
             block.setType(Material.AIR);
@@ -55,8 +58,11 @@ public class Platform {
 
         structure = blocks;
         center = center.clone().add(xDistance, yDistance, zDistance);
+        Bukkit.broadcastMessage("center: " + center);
         selection1 = selection1.clone().add(xDistance, yDistance, zDistance);
+        Bukkit.broadcastMessage("selection1: " + selection1);
         selection2 = selection2.clone().add(xDistance, yDistance, zDistance);
+        Bukkit.broadcastMessage("selection2: " + selection2);
     }
 
     public Location getCenter() {
