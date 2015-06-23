@@ -80,30 +80,26 @@ public class Platform {
         int xDistance = destination.getBlockX() - center.getBlockX();
         int yDistance = destination.getBlockY() - center.getBlockY();
         int zDistance = destination.getBlockZ() - center.getBlockZ();
-        Bukkit.getLogger().severe("xDis: " + xDistance);
-        Bukkit.getLogger().severe("yDis: " + yDistance);
-        Bukkit.getLogger().severe("zDis: " + zDistance);
-        Bukkit.getLogger().severe("---------------------");
 
         Set<Block> blocks = new HashSet<>();
         for (Block block : structure) {
             Block newBlock = block.getWorld().getBlockAt(block.getLocation().clone().add(xDistance, yDistance, zDistance));
-            Bukkit.getLogger().severe("block.getLocation(): " + block.getLocation());
             newBlock.setType(block.getType());
-            Bukkit.getLogger().severe("block.getType(): " + block.getType());
             newBlock.getState().update();
-            block.setType(Material.AIR);
-            block.getState().update();
             blocks.add(newBlock);
+        }
+        for (Block oldBlock : structure) {
+            for (Block newBlock : blocks) {
+                if (oldBlock.getLocation().distance(newBlock.getLocation()) == 0) {
+                    oldBlock.setType(Material.AIR);
+                }
+            }
         }
 
         structure = blocks;
         center = center.clone().add(xDistance, yDistance, zDistance);
-        Bukkit.getLogger().severe("center: " + center);
         selection1 = selection1.add(xDistance, yDistance, zDistance);
-        Bukkit.getLogger().severe("selection1: " + selection1);
         selection2 = selection2.add(xDistance, yDistance, zDistance);
-        Bukkit.getLogger().severe("selection2: " + selection2);
     }
 
     public Location getCenter() {
