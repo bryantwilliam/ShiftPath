@@ -15,8 +15,8 @@ public class ActivePath extends Path {
 
     public ActivePath(int pathID, ShiftPath plugin) {
         super(plugin);
-        platform = new Platform(new LocationData("Paths." + pathID + ".sel1", getPlugin()).getLocation(),
-                new LocationData("Paths." + pathID + ".sel2", getPlugin()).getLocation());
+        platform = new Platform(new LocationData("Paths." + pathID + ".selection1", getPlugin()).getLocation(),
+                new LocationData("Paths." + pathID + ".selection2", getPlugin()).getLocation());
         for (String pointKey : getPlugin().getConfig().getConfigurationSection("Paths." + pathID + ".path").getKeys(false)) {
             getPath().clear();
             getPath().add(new LocationData("Paths." + pathID + ".path." + pointKey, getPlugin()).getLocation());
