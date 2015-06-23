@@ -5,6 +5,7 @@ import com.gmail.gogobebe2.shiftpath.Platform;
 import com.gmail.gogobebe2.shiftpath.ShiftPath;
 import org.bukkit.Location;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,7 +29,8 @@ public class ActivePath extends Path {
         if (platform.getCenter().getBlock().getLocation().distance(getPath().get(currentGoalIndex).getBlock().getLocation()) == 0) {
             // The goal as been reached.
             if (currentGoalIndex == getPath().size() - 1) {
-                currentGoalIndex = 0;
+                Collections.reverse(getPath());
+                currentGoalIndex = 1;
             } else {
                 currentGoalIndex++;
             }
