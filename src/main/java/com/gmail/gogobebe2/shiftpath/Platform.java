@@ -89,10 +89,10 @@ public class Platform {
             blocks.add(newBlock);
         }
         for (Block oldBlock : structure) {
-            boolean destroy = false;
+            boolean destroy = true;
             for (Block newBlock : blocks) {
-                if (!(oldBlock.getLocation().distance(newBlock.getLocation()) < 1)) {
-                    destroy = true;
+                if (oldBlock.getLocation().equals(newBlock.getLocation())) {
+                    destroy = false;
                 }
             }
             if (destroy) {
