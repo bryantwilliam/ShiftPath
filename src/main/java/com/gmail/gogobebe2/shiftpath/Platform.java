@@ -18,21 +18,33 @@ public class Platform {
         this.selection1 = selection1;
         this.selection2 = selection2;
         int centerX = 0, centerY = 0, centerZ = 0;
-        for (int x = selection1.getBlockX(); x < selection2.getBlockX() + 1; x++) {
-            for (int y = selection1.getBlockY(); y < selection2.getBlockY() + 1; y++) {
-                for (int z = selection1.getBlockZ(); z < selection2.getBlockZ() + 1; z++) {
+        Bukkit.getLogger().severe("sel1X:" + selection1.getBlockX());
+        Bukkit.getLogger().severe("sel1Y:" + selection1.getBlockY());
+        Bukkit.getLogger().severe("sel1Z:" + selection1.getBlockZ());
+        Bukkit.getLogger().severe("sel2X:" + selection2.getBlockX());
+        Bukkit.getLogger().severe("sel2Y:" + selection2.getBlockY());
+        Bukkit.getLogger().severe("sel2Z:" + selection2.getBlockZ());
+
+        Location biggestSelection = selection1.getBlockX() > selection2.getBlockX() ? selection1  : selection2;
+        Location smallestSelection = selection1.distance(biggestSelection) == 0 ? selection2  : selection1;
+
+        for (int x = smallestSelection.getBlockX(); x <= biggestSelection.getBlockX(); x++) {
+            for (int y = smallestSelection.getBlockY(); y <= biggestSelection.getBlockY(); y++) {
+                for (int z = smallestSelection.getBlockZ(); z <= biggestSelection.getBlockZ(); z++) {
                     structure.add(selection1.getWorld().getBlockAt(x, y, z));
                     centerX += x; centerY += y; centerZ += z;
-                    Bukkit.broadcastMessage("x: " + centerX);
-                    Bukkit.broadcastMessage("y: " + centerY);
-                    Bukkit.broadcastMessage("z: " + centerZ);
+                    Bukkit.getLogger().severe("x1: " + centerX);
+                    Bukkit.getLogger().severe("y1: " + centerY);
+                    Bukkit.getLogger().severe("z1: " + centerZ);
                 }
             }
         }
         if (centerX != 0) centerX /= structure.size();
         if (centerY != 0) centerY /= structure.size();
         if (centerY != 0) centerZ /= structure.size();
-
+        Bukkit.getLogger().severe("x2: " + centerX);
+        Bukkit.getLogger().severe("y2: " + centerY);
+        Bukkit.getLogger().severe("z2: " + centerZ);
         this.center = selection1.getWorld().getBlockAt(centerX, centerY, centerZ).getLocation();
     }
 
@@ -40,17 +52,17 @@ public class Platform {
         int xDistance = destination.getBlockX() - center.getBlockX();
         int yDistance = destination.getBlockY() - center.getBlockY();
         int zDistance = destination.getBlockZ() - center.getBlockZ();
-        Bukkit.broadcastMessage("xDis: " + xDistance);
-        Bukkit.broadcastMessage("yDis: " + yDistance);
-        Bukkit.broadcastMessage("zDis: " + zDistance);
-        Bukkit.broadcastMessage("---------------------");
+        Bukkit.getLogger().severe("xDis: " + xDistance);
+        Bukkit.getLogger().severe("yDis: " + yDistance);
+        Bukkit.getLogger().severe("zDis: " + zDistance);
+        Bukkit.getLogger().severe("---------------------");
 
         Set<Block> blocks = new HashSet<>();
         for (Block block : structure) {
             Block newBlock = block.getWorld().getBlockAt(block.getLocation().clone().add(xDistance, yDistance, zDistance));
-            Bukkit.broadcastMessage("block.getLocation(): " + block.getLocation());
+            Bukkit.getLogger().severe("block.getLocation(): " + block.getLocation());
             newBlock.setType(block.getType());
-            Bukkit.broadcastMessage("block.getType(): " + block.getType());
+            Bukkit.getLogger().severe("block.getType(): " + block.getType());
             newBlock.getState().update();
             block.setType(Material.AIR);
             block.getState().update();
@@ -59,11 +71,11 @@ public class Platform {
 
         structure = blocks;
         center = center.clone().add(xDistance, yDistance, zDistance);
-        Bukkit.broadcastMessage("center: " + center);
+        Bukkit.getLogger().severe("center: " + center);
         selection1 = selection1.add(xDistance, yDistance, zDistance);
-        Bukkit.broadcastMessage("selection1: " + selection1);
+        Bukkit.getLogger().severe("selection1: " + selection1);
         selection2 = selection2.add(xDistance, yDistance, zDistance);
-        Bukkit.broadcastMessage("selection2: " + selection2);
+        Bukkit.getLogger().severe("selection2: " + selection2);
     }
 
     public Location getCenter() {
