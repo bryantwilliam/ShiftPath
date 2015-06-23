@@ -90,7 +90,7 @@ public class Platform {
         }
         for (Block oldBlock : structure) {
             for (Block newBlock : blocks) {
-                if (oldBlock.getLocation().distance(newBlock.getLocation()) == 0) {
+                if (oldBlock.getLocation().distance(newBlock.getLocation()) < 1) {
                     oldBlock.setType(Material.AIR);
                 }
             }
