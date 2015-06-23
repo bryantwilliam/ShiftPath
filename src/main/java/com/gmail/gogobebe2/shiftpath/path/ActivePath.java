@@ -30,7 +30,12 @@ public class ActivePath extends Path {
             // The goal as been reached.
             if (currentGoalIndex == getPath().size() - 1) {
                 Collections.reverse(getPath());
-                currentGoalIndex = 1;
+                if (getPath().size() == 1) {
+                    currentGoalIndex = 0;
+                }
+                else {
+                    currentGoalIndex = 1;
+                }
             } else {
                 currentGoalIndex++;
             }
