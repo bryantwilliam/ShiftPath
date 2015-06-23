@@ -17,9 +17,9 @@ public class Platform {
         this.selection1 = selection1;
         this.selection2 = selection2;
         int centerX = 0, centerY = 0, centerZ = 0;
-        for (int x = selection1.getBlockX(); x < selection2.getBlockX(); x++) {
-            for (int y = selection1.getBlockY(); y < selection2.getBlockY(); y++) {
-                for (int z = selection1.getBlockZ(); z < selection2.getBlockZ(); z++) {
+        for (int x = selection1.getBlockX(); x < selection2.getBlockX() + 1; x++) {
+            for (int y = selection1.getBlockY(); y < selection2.getBlockY() + 1; y++) {
+                for (int z = selection1.getBlockZ(); z < selection2.getBlockZ() + 1; z++) {
                     blocks.add(selection1.getWorld().getBlockAt(x, y, z));
                     centerX += x; centerY += y; centerZ += z;
                 }
