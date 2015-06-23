@@ -24,20 +24,41 @@ public class Platform {
         Bukkit.getLogger().severe("sel2X:" + selection2.getBlockX());
         Bukkit.getLogger().severe("sel2Y:" + selection2.getBlockY());
         Bukkit.getLogger().severe("sel2Z:" + selection2.getBlockZ());
-        Location biggestSelection;
-        Location smallestSelection;
+        int biggestX;
+        int biggestY;
+        int biggestZ;
+        int smallestX;
+        int smallestY;
+        int smallestZ;
+
         if (selection1.getBlockX() > selection2.getBlockX()) {
-            biggestSelection = selection1;
-            smallestSelection = selection2;
+            biggestX = selection1.getBlockX();
+            smallestX = selection2.getBlockX();
         }
         else {
-            biggestSelection = selection2;
-            smallestSelection = selection1;
+            biggestX = selection1.getBlockX();
+            smallestX = selection2.getBlockX();
+        }
+        if (selection1.getBlockY() > selection2.getBlockY()) {
+            biggestY = selection1.getBlockY();
+            smallestY = selection2.getBlockY();
+        }
+        else {
+            biggestY = selection1.getBlockY();
+            smallestY = selection2.getBlockY();
+        }
+        if (selection1.getBlockZ() > selection2.getBlockZ()) {
+            biggestZ = selection1.getBlockZ();
+            smallestZ = selection2.getBlockZ();
+        }
+        else {
+            biggestZ = selection1.getBlockZ();
+            smallestZ = selection2.getBlockZ();
         }
 
-        for (int x = smallestSelection.getBlockX(); x <= biggestSelection.getBlockX(); x++) {
-            for (int y = smallestSelection.getBlockY(); y <= biggestSelection.getBlockY(); y++) {
-                for (int z = smallestSelection.getBlockZ(); z <= biggestSelection.getBlockZ(); z++) {
+        for (int x = smallestX; x <= biggestX; x++) {
+            for (int y = smallestY; y <= biggestY; y++) {
+                for (int z = smallestZ; z <= biggestZ; z++) {
                     structure.add(selection1.getWorld().getBlockAt(x, y, z));
                     centerX += x; centerY += y; centerZ += z;
                     Bukkit.getLogger().severe("x1: " + centerX);
