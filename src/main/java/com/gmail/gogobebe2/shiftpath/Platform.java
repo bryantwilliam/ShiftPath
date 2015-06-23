@@ -36,24 +36,24 @@ public class Platform {
             smallestX = selection2.getBlockX();
         }
         else {
-            biggestX = selection1.getBlockX();
-            smallestX = selection2.getBlockX();
+            biggestX = selection2.getBlockX();
+            smallestX = selection1.getBlockX();
         }
         if (selection1.getBlockY() > selection2.getBlockY()) {
-            biggestY = selection1.getBlockY();
-            smallestY = selection2.getBlockY();
+            biggestY = selection2.getBlockY();
+            smallestY = selection1.getBlockY();
         }
         else {
-            biggestY = selection1.getBlockY();
-            smallestY = selection2.getBlockY();
+            biggestY = selection2.getBlockY();
+            smallestY = selection1.getBlockY();
         }
         if (selection1.getBlockZ() > selection2.getBlockZ()) {
-            biggestZ = selection1.getBlockZ();
-            smallestZ = selection2.getBlockZ();
+            biggestZ = selection2.getBlockZ();
+            smallestZ = selection1.getBlockZ();
         }
         else {
-            biggestZ = selection1.getBlockZ();
-            smallestZ = selection2.getBlockZ();
+            biggestZ = selection2.getBlockZ();
+            smallestZ = selection1.getBlockZ();
         }
 
         for (int x = smallestX; x <= biggestX; x++) {
