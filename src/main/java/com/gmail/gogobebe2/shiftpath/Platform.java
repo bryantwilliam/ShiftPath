@@ -24,9 +24,16 @@ public class Platform {
         Bukkit.getLogger().severe("sel2X:" + selection2.getBlockX());
         Bukkit.getLogger().severe("sel2Y:" + selection2.getBlockY());
         Bukkit.getLogger().severe("sel2Z:" + selection2.getBlockZ());
-
-        Location biggestSelection = selection1.getBlockX() > selection2.getBlockX() ? selection1  : selection2;
-        Location smallestSelection = selection1.distance(biggestSelection) == 0 ? selection2  : selection1;
+        Location biggestSelection;
+        Location smallestSelection;
+        if (selection1.getBlockX() > selection2.getBlockX()) {
+            biggestSelection = selection1;
+            smallestSelection = selection2;
+        }
+        else {
+            biggestSelection = selection2;
+            smallestSelection = selection1;
+        }
 
         for (int x = smallestSelection.getBlockX(); x <= biggestSelection.getBlockX(); x++) {
             for (int y = smallestSelection.getBlockY(); y <= biggestSelection.getBlockY(); y++) {
