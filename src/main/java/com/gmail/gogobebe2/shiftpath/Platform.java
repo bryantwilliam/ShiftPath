@@ -1,6 +1,5 @@
 package com.gmail.gogobebe2.shiftpath;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -18,12 +17,6 @@ public class Platform {
         this.selection1 = selection1;
         this.selection2 = selection2;
         int centerX = 0, centerY = 0, centerZ = 0;
-        Bukkit.getLogger().severe("sel1X:" + selection1.getBlockX());
-        Bukkit.getLogger().severe("sel1Y:" + selection1.getBlockY());
-        Bukkit.getLogger().severe("sel1Z:" + selection1.getBlockZ());
-        Bukkit.getLogger().severe("sel2X:" + selection2.getBlockX());
-        Bukkit.getLogger().severe("sel2Y:" + selection2.getBlockY());
-        Bukkit.getLogger().severe("sel2Z:" + selection2.getBlockZ());
         int biggestX;
         int biggestY;
         int biggestZ;
@@ -61,18 +54,12 @@ public class Platform {
                 for (int z = smallestZ; z <= biggestZ; z++) {
                     structure.add(selection1.getWorld().getBlockAt(x, y, z));
                     centerX += x; centerY += y; centerZ += z;
-                    Bukkit.getLogger().severe("x1: " + centerX);
-                    Bukkit.getLogger().severe("y1: " + centerY);
-                    Bukkit.getLogger().severe("z1: " + centerZ);
                 }
             }
         }
         if (centerX != 0) centerX /= structure.size();
         if (centerY != 0) centerY /= structure.size();
         if (centerY != 0) centerZ /= structure.size();
-        Bukkit.getLogger().severe("x2: " + centerX);
-        Bukkit.getLogger().severe("y2: " + centerY);
-        Bukkit.getLogger().severe("z2: " + centerZ);
         this.center = selection1.getWorld().getBlockAt(centerX, centerY, centerZ).getLocation();
     }
 
