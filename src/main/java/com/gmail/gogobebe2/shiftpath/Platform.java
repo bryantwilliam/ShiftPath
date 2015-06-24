@@ -68,18 +68,18 @@ public class Platform {
         int yDistance = destination.getBlockY() - center.getBlockY();
         int zDistance = destination.getBlockZ() - center.getBlockZ();
 
-        Set<Block> blocks = new HashSet<>();
-        for (Block block : structure) {
-            Block newBlock = block.getWorld().getBlockAt(block.getLocation().clone().add(xDistance, yDistance, zDistance));
-            newBlock.setType(block.getType());
-            newBlock.getState().update();
-            blocks.add(newBlock);
+        Set<Block> newPlatform = new HashSet<>();
+        for (Block oldBlock : structure) {
+            Block newBlock = oldBlock.getWorld().getBlockAt(oldBlock.getLocation().clone().add(xDistance, yDistance, zDistance));
+            newBlock.setType(oldBlock.getType());
+            newPlatform.add(newBlock);
         }
         for (Block oldBlock : structure) {
             boolean destroy = true;
-            for (Block newBlock : blocks) {
+            for (Block newBlock : newPlatform) {
                 if (oldBlock.getLocation().equals(newBlock.getLocation())) {
                     destroy = false;
+                    break;
                 }
             }
             if (destroy) {
@@ -87,7 +87,7 @@ public class Platform {
             }
         }
 
-        structure = blocks;
+        structure = newPlatform;
         center = center.clone().add(xDistance, yDistance, zDistance);
         selection1 = selection1.add(xDistance, yDistance, zDistance);
         selection2 = selection2.add(xDistance, yDistance, zDistance);
