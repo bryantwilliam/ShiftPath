@@ -1,6 +1,7 @@
 package com.gmail.gogobebe2.shiftpath;
 
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 import java.util.HashSet;
@@ -67,14 +68,25 @@ public class Platform {
         int yDistance = destination.getBlockY() - center.getBlockY();
         int zDistance = destination.getBlockZ() - center.getBlockZ();
 
-        Set<Block> newPlatform = new HashSet<>();
+        Set<Block> newStructure = new HashSet<>();
         for (Block oldBlock : structure) {
             Block newBlock = oldBlock.getWorld().getBlockAt(oldBlock.getLocation().clone().add(xDistance, yDistance, zDistance));
             newBlock.setType(oldBlock.getType());
-            newPlatform.add(newBlock);
+            newStructure.add(newBlock);
+        }
+        for (Block oldBlock : structure) {
+            boolean delete = true;
+            for (Block newBlock : newStructure) {
+                if (oldBlock.getLocation().equals(newBlock.getLocation())) {
+                    delete = false;
+                }
+            }
+            if (delete) {
+                oldBlock.setType(Material.AIR);
+            }
         }
 
-        structure = newPlatform;
+        structure = newStructure;
         center = center.clone().add(xDistance, yDistance, zDistance);
         selection1 = selection1.add(xDistance, yDistance, zDistance);
         selection2 = selection2.add(xDistance, yDistance, zDistance);
