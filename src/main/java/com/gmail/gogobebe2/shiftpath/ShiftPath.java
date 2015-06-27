@@ -60,20 +60,17 @@ public class ShiftPath extends JavaPlugin {
         wandLore.add(ChatColor.GREEN + "Left click" + ChatColor.AQUA + " to define the path");
         wandLore.add(ChatColor.GREEN + "Type " + ChatColor.DARK_GREEN + "/sp set" + ChatColor.AQUA + " to save selections made");
 
-                wandMeta.setLore(wandLore);
+        wandMeta.setLore(wandLore);
         wand.setItemMeta(wandMeta);
         return wand;
     }
 
     public static boolean isItemWand(ItemStack stick) throws NullPointerException {
-        try {
-            List<String> stickLore = stick.getItemMeta().getLore();
-            return stickLore != null && stick.getType() == Material.STICK && stickLore.equals(WAND.getItemMeta().getLore());
-        }
-        catch (NullPointerException exc) {
-            exc.printStackTrace();
+        if (stick == null) {
             return false;
         }
+        List<String> stickLore = stick.getItemMeta().getLore();
+        return stickLore != null && stick.getType() == Material.STICK && stickLore.equals(WAND.getItemMeta().getLore());
     }
 
     @Override
@@ -93,17 +90,14 @@ public class ShiftPath extends JavaPlugin {
                         + ChatColor.GREEN + "/sp set"
                         + ChatColor.RESET + " and restart the server for it to take effect.");
                 return true;
-            }
-            else if (args[0].equalsIgnoreCase("set")) {
+            } else if (args[0].equalsIgnoreCase("set")) {
                 if (PathInConstruction.getPathInProgress(player, this).save()) {
                     player.sendMessage(ChatColor.GREEN + "Saved path in config.");
-                }
-                else {
+                } else {
                     player.sendMessage(ChatColor.RED + "Error! You have not defined the required points to set a new path.");
                 }
                 return true;
-            }
-            else if (args[0].equalsIgnoreCase("wand")) {
+            } else if (args[0].equalsIgnoreCase("wand")) {
                 ItemStack wand = WAND.clone();
 
                 PlayerInventory inventory = player.getInventory();
@@ -127,14 +121,12 @@ public class ShiftPath extends JavaPlugin {
 
                 if (itemInHand == null || itemInHand.getType() == Material.AIR) {
                     player.setItemInHand(wand);
-                }
-                else {
+                } else {
                     int slot = inventory.firstEmpty();
                     if (slot == -1) {
                         player.sendMessage(ChatColor.RED + "Error! Not enough space in your inventory!");
                         return true;
-                    }
-                    else {
+                    } else {
                         inventory.setItem(slot, wand);
                     }
 
