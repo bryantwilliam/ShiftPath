@@ -5,6 +5,7 @@ import com.gmail.gogobebe2.shiftpath.path.PathInConstruction;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -39,6 +40,9 @@ public class ShiftPath extends JavaPlugin {
                     }
                 }
             }, 0L, 20L);
+        }
+        for (World world : Bukkit.getWorlds()) {
+            world.setAutoSave(false);
         }
     }
 
