@@ -14,9 +14,7 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class ShiftPath extends JavaPlugin {
     private static final ItemStack WAND = createWand();
@@ -44,7 +42,11 @@ public class ShiftPath extends JavaPlugin {
         for (World world : Bukkit.getWorlds()) {
             world.setAutoSave(false);
         }
+
+        TreeMap<Integer, String> as = new TreeMap<>();
+        Arrays.sort(as.keySet().toArray());
     }
+
 
     @Override
     public void onDisable() {
@@ -93,8 +95,18 @@ public class ShiftPath extends JavaPlugin {
                 player.sendMessage("After you've selected your regions and paths with the wand, use "
                         + ChatColor.GREEN + "/sp set"
                         + ChatColor.RESET + " and restart the server for it to take effect.");
+                player.sendMessage("If you make a change to the world you want to save, type " + ChatColor.GREEN
+                        + "/saveworld" + ChatColor.RESET + " after.");
                 return true;
-            } else if (args[0].equalsIgnoreCase("set")) {
+            }
+            else if (args[0].equalsIgnoreCase("saveworld")) {
+                for (World world : Bukkit.getWorlds()) {
+                    world.setAutoSave(false);
+                }
+                player.sendMessage(ChatColor.GREEN + "Worlds saved!");
+                return true;
+            }
+            else if (args[0].equalsIgnoreCase("set")) {
                 if (PathInConstruction.getPathInProgress(player, this).save()) {
                     player.sendMessage(ChatColor.GREEN + "Saved path in config.");
                 } else {
