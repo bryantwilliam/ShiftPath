@@ -66,7 +66,7 @@ public class ShiftPath extends JavaPlugin {
     }
 
     public static boolean isItemWand(ItemStack stick) throws NullPointerException {
-        if (stick == null) {
+        if (stick == null || !stick.hasItemMeta() || !stick.getItemMeta().hasLore()) {
             return false;
         }
         List<String> stickLore = stick.getItemMeta().getLore();

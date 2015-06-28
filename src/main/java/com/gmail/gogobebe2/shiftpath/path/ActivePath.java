@@ -17,12 +17,9 @@ public class ActivePath extends Path {
         super(plugin);
         LocationData selection1 = new LocationData("Paths." + pathID + ".selection1", getPlugin());
         LocationData selection2 = new LocationData("Paths." + pathID + ".selection2", getPlugin());
-        selection1.getLocation().getWorld().setAutoSave(false);
-        selection2.getLocation().getWorld().setAutoSave(false);
         platform = new Platform(selection1.getLocation(), selection2.getLocation());
         for (String pointKey : getPlugin().getConfig().getConfigurationSection("Paths." + pathID + ".path").getKeys(false)) {
             LocationData point = new LocationData("Paths." + pathID + ".path." + pointKey, getPlugin());
-            point.getLocation().getWorld().setAutoSave(false);
             getPath().add(point.getLocation());
         }
         activePaths.add(this);
