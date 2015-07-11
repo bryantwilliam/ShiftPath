@@ -52,7 +52,11 @@ public class Platform {
         for (int x = smallestX; x <= biggestX; x++) {
             for (int y = smallestY; y <= biggestY; y++) {
                 for (int z = smallestZ; z <= biggestZ; z++) {
-                    structure.add(selection1.getWorld().getBlockAt(x, y, z));
+                    Block block = selection1.getWorld().getBlockAt(x, y, z);
+                    if (block.getType() != Material.AIR) {
+                        structure.add(block);
+                    }
+
                     centerX += x; centerY += y; centerZ += z;
                 }
             }
@@ -77,7 +81,7 @@ public class Platform {
         for (Block oldBlock : structure) {
             boolean delete = true;
             for (Block newBlock : newStructure) {
-                if (oldBlock.getLocation().equals(newBlock.getLocation())) {
+                if (oldBlock.getLocation().clone().equals(newBlock.getLocation().clone())) {
                     delete = false;
                 }
             }
