@@ -27,28 +27,24 @@ public class Platform {
         if (selection1.getBlockX() > selection2.getBlockX()) {
             biggestX = selection1.getBlockX();
             smallestX = selection2.getBlockX();
-        }
-        else {
+        } else {
             biggestX = selection2.getBlockX();
             smallestX = selection1.getBlockX();
         }
         if (selection1.getBlockY() > selection2.getBlockY()) {
             biggestY = selection1.getBlockY();
             smallestY = selection2.getBlockY();
-        }
-        else {
+        } else {
             biggestY = selection2.getBlockY();
             smallestY = selection1.getBlockY();
         }
         if (selection1.getBlockZ() > selection2.getBlockZ()) {
             biggestZ = selection1.getBlockZ();
             smallestZ = selection2.getBlockZ();
-        }
-        else {
+        } else {
             biggestZ = selection2.getBlockZ();
             smallestZ = selection1.getBlockZ();
         }
-
         for (int x = smallestX; x <= biggestX; x++) {
             for (int y = smallestY; y <= biggestY; y++) {
                 for (int z = smallestZ; z <= biggestZ; z++) {
@@ -56,13 +52,15 @@ public class Platform {
                     if (block.getType() != Material.AIR) {
                         structure.add(block);
                     }
-                    centerX += x; centerY += y; centerZ += z;
+                    centerX += x;
+                    centerY += y;
+                    centerZ += z;
                 }
             }
         }
         if (centerX != 0) centerX /= structure.size();
         if (centerY != 0) centerY /= structure.size();
-        if (centerY != 0) centerZ /= structure.size();
+        if (centerZ != 0) centerZ /= structure.size();
         this.center = selection1.getWorld().getBlockAt(centerX, centerY, centerZ).getLocation();
     }
 
