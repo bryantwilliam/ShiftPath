@@ -1,5 +1,5 @@
 name: ShiftPath
-version: 1.9.10-DEVELOPMENT-SNAPSHOT
+version: 1.9.11-DEVELOPMENT-SNAPSHOT
 main: com.gmail.gogobebe2.shiftpath.ShiftPath
 description: Make a path that shifts around.
 author: William Bryant (gogobebe2)
@@ -8,3 +8,6 @@ commands:
   shiftpath:
     description: Create plateforms of 2, 3 or 4 size and set a path they go through.
     aliases: [sp]
+permissions:
+  shiftpath.*:
+    default: op
