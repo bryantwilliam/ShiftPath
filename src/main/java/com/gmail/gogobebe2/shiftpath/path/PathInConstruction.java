@@ -5,7 +5,6 @@ import com.gmail.gogobebe2.shiftpath.ShiftPath;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -31,7 +30,12 @@ public class PathInConstruction extends Path {
             if (getPlugin().getConfig().isSet("Paths")) {
                 Set<String> paths = getPlugin().getConfig().getConfigurationSection("Paths").getKeys(false);
                 if (!paths.isEmpty()) {
-                    id = Integer.parseInt(Collections.max(paths)) + 1;
+                    for (String p : paths) {
+                        int pathID = Integer.parseInt(p);
+                        if (pathID > id) {
+                            id = pathID;
+                        }
+                    }
                 }
             }
             new LocationData(selection1, getPlugin()).saveToConfig("Paths." + id + ".selection1");
