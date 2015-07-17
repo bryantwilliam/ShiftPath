@@ -99,7 +99,7 @@ public class ShiftPath extends JavaPlugin {
                         + "/saveworld" + ChatColor.RESET + " after.");
                 return true;
             }
-            else if (args[0].equalsIgnoreCase("saveworld")) {
+            else if (args[0].equalsIgnoreCase("saveworld") || args[0].equalsIgnoreCase("save")) {
                 for (World world : Bukkit.getWorlds()) {
                     world.save();
                 }

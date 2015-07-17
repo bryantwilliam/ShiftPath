@@ -28,20 +28,17 @@ public class PathInConstruction extends Path {
     public boolean save() {
         if (selection1 != null && selection2 != null && getPath().size() > 0) {
             int id = 0;
-            int latestPathID = 0;
             if (getPlugin().getConfig().isSet("Paths")) {
                 Set<String> paths = getPlugin().getConfig().getConfigurationSection("Paths").getKeys(false);
                 if (!paths.isEmpty()) {
                     id = Integer.parseInt(Collections.max(paths)) + 1;
-                    String latestPoint = Collections.max(paths);
-                    latestPathID = Integer.parseInt(latestPoint.substring(latestPoint.length() - 1));
                 }
             }
             new LocationData(selection1, getPlugin()).saveToConfig("Paths." + id + ".selection1");
             new LocationData(selection2, getPlugin()).saveToConfig("Paths." + id + ".selection2");
             for (int p = 0; p < getPath().size(); p++) {
                 Location point = getPath().get(p);
-                new LocationData(point, getPlugin()).saveToConfig("Paths." + id + ".path.point" + (latestPathID + p));
+                new LocationData(point, getPlugin()).saveToConfig("Paths." + id + ".path.point" + p);
             }
 
             pathsInConstruction.remove(this);

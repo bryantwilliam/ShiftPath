@@ -56,7 +56,6 @@ public class Platform {
                     if (block.getType() != Material.AIR) {
                         structure.add(block);
                     }
-
                     centerX += x; centerY += y; centerZ += z;
                 }
             }
