@@ -33,7 +33,7 @@ public class PathInConstruction extends Path {
                     for (String p : paths) {
                         int pathID = Integer.parseInt(p);
                         if (pathID > id) {
-                            id = pathID;
+                            id = pathID + 1;
                         }
                     }
                 }
