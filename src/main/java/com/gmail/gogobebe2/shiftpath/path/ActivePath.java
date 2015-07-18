@@ -3,6 +3,8 @@ package com.gmail.gogobebe2.shiftpath.path;
 import com.gmail.gogobebe2.shiftpath.LocationData;
 import com.gmail.gogobebe2.shiftpath.Platform;
 import com.gmail.gogobebe2.shiftpath.ShiftPath;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 
 import java.util.HashSet;
@@ -12,6 +14,9 @@ public class ActivePath extends Path {
     private static Set<ActivePath> activePaths = new HashSet<>();
     private Platform platform;
     private int currentGoalIndex = 0;
+
+    //DEBUG pathID
+    private int pathID;
 
     public ActivePath(int pathID, ShiftPath plugin) {
         super(plugin);
@@ -23,12 +28,19 @@ public class ActivePath extends Path {
             getPath().add(point.getLocation());
         }
         activePaths.add(this);
+
+        //DEBUG pathID
+        this.pathID = pathID;
     }
 
     public void approachNextPoint() {
+        Bukkit.broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + "DEBUG: " + ChatColor.RESET + "pathID: " + pathID);
         if (getPath().size() != 1) {
             Location currentGoal = getPath().get(currentGoalIndex).getBlock().getLocation();
             Location center = platform.getCenter().getBlock().getLocation();
+            Bukkit.broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + "DEBUG: " + ChatColor.RESET + "currentGoal: " + currentGoal);
+            Bukkit.broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + "DEBUG: " + ChatColor.RESET + "center: " + center);
+
             if (center.distance(currentGoal) != 0) {
                 int xFactor = 0;
                 int yFactor = 0;
@@ -40,11 +52,15 @@ public class ActivePath extends Path {
                     xFactor = -1;
                 }
 
+                Bukkit.broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + "DEBUG: " + ChatColor.RESET + "xFactor: " + xFactor);
+
                 if (center.getBlockY() < currentGoal.getBlockY()) {
                     yFactor = 1;
                 } else if (center.getBlockY() > currentGoal.getBlockY()) {
                     yFactor = -1;
                 }
+
+                Bukkit.broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + "DEBUG: " + ChatColor.RESET + "yFactor: " + yFactor);
 
                 if (center.getBlockZ() < currentGoal.getBlockZ()) {
                     zFactor = 1;
@@ -52,10 +68,14 @@ public class ActivePath extends Path {
                     zFactor = -1;
                 }
 
-                platform.move(center.clone().add(xFactor, yFactor, zFactor));
+                Bukkit.broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + "DEBUG: " + ChatColor.RESET + "zFactor: " + zFactor);
 
+                Bukkit.broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + "DEBUG: " + ChatColor.RESET + "platform: " + platform);
+                platform.move(center.clone().add(xFactor, yFactor, zFactor));
+                Bukkit.broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + "DEBUG: " + ChatColor.RESET + "(2)platform: " + platform);
             }
             else {
+                Bukkit.broadcastMessage(ChatColor.RED + "" + ChatColor.BOLD + "DEBUG: " + ChatColor.RESET + "currentGoalIndex: " + currentGoalIndex);
                 // The goal as been reached.
                 if (currentGoalIndex == getPath().size() - 1) {
                     // If I want to to just reverse:
