@@ -102,15 +102,13 @@ public class ShiftPath extends JavaPlugin {
                 player.sendMessage("If you make a change to the world you want to save, type " + ChatColor.GREEN
                         + "/saveworld" + ChatColor.RESET + " after.");
                 return true;
-            }
-            else if (args[0].equalsIgnoreCase("saveworld") || args[0].equalsIgnoreCase("save")) {
+            } else if (args[0].equalsIgnoreCase("saveworld") || args[0].equalsIgnoreCase("save")) {
                 for (World world : Bukkit.getWorlds()) {
                     world.save();
                 }
                 player.sendMessage(ChatColor.GREEN + "Worlds saved!");
                 return true;
-            }
-            else if (args[0].equalsIgnoreCase("set")) {
+            } else if (args[0].equalsIgnoreCase("set")) {
                 if (PathInConstruction.getPathInProgress(player, this).save()) {
                     player.sendMessage(ChatColor.GREEN + "Saved path in config.");
                 } else {

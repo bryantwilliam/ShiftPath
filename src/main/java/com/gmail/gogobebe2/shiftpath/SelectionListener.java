@@ -32,8 +32,7 @@ public class SelectionListener implements Listener {
                 player.sendMessage(ChatColor.DARK_GREEN + (pathInConstruction.isRegionDefined() ? "Second" : "First")
                         + " point for the cubic or trapezoid platform's region defined.");
                 event.setCancelled(true);
-            }
-            else if (action == Action.LEFT_CLICK_BLOCK) {
+            } else if (action == Action.LEFT_CLICK_BLOCK) {
                 List<Location> path = pathInConstruction.getPath();
                 path.add(block.getLocation());
                 player.sendMessage(ChatColor.DARK_GREEN + "Path point number " + path.size() + " defined");

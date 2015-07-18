@@ -40,29 +40,29 @@ public class ActivePath extends Path {
             }
             Location currentGoal = getPath().get(currentGoalIndex).getBlock().getLocation();
             Location center = platform.getCenter().getBlock().getLocation();
-            int xfactor = 0;
-            int yfactor = 0;
-            int zfactor = 0;
+            int xFactor = 0;
+            int yFactor = 0;
+            int zFactor = 0;
 
             if (center.getBlockX() < currentGoal.getBlockX()) {
-                xfactor = 1;
+                xFactor = 1;
             } else if (center.getBlockX() > currentGoal.getBlockX()) {
-                xfactor = -1;
+                xFactor = -1;
             }
 
             if (center.getBlockY() < currentGoal.getBlockY()) {
-                yfactor = 1;
+                yFactor = 1;
             } else if (center.getBlockY() > currentGoal.getBlockY()) {
-                yfactor = -1;
+                yFactor = -1;
             }
 
             if (center.getBlockZ() < currentGoal.getBlockZ()) {
-                zfactor = 1;
+                zFactor = 1;
             } else if (center.getBlockZ() > currentGoal.getBlockZ()) {
-                zfactor = -1;
+                zFactor = -1;
             }
 
-            platform.move(center.clone().add(xfactor, yfactor, zfactor));
+            platform.move(center.clone().add(xFactor, yFactor, zFactor));
         }
     }
 

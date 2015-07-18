@@ -66,8 +66,17 @@ public class Platform {
 
     public void move(Location destination) {
         int xDistance = destination.getBlockX() - center.getBlockX();
+        if (destination.getBlockX() < 0 && center.getBlockX() < 0) {
+            xDistance = -xDistance;
+        }
         int yDistance = destination.getBlockY() - center.getBlockY();
+        if (destination.getBlockY() < 0 && center.getBlockY() < 0) {
+            yDistance = -yDistance;
+        }
         int zDistance = destination.getBlockZ() - center.getBlockZ();
+        if (destination.getBlockZ() < 0 && center.getBlockZ() < 0) {
+            zDistance = -zDistance;
+        }
 
         Set<Block> newStructure = new HashSet<>();
         for (Block oldBlock : structure) {
