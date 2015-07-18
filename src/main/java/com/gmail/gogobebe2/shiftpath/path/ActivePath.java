@@ -27,7 +27,35 @@ public class ActivePath extends Path {
 
     public void approachNextPoint() {
         if (getPath().size() != 1) {
-            if (platform.getCenter().getBlock().getLocation().distance(getPath().get(currentGoalIndex).getBlock().getLocation()) == 0) {
+            Location currentGoal = getPath().get(currentGoalIndex).getBlock().getLocation();
+            Location center = platform.getCenter().getBlock().getLocation();
+            if (center.distance(currentGoal) != 0) {
+                int xFactor = 0;
+                int yFactor = 0;
+                int zFactor = 0;
+
+                if (center.getBlockX() < currentGoal.getBlockX()) {
+                    xFactor = 1;
+                } else if (center.getBlockX() > currentGoal.getBlockX()) {
+                    xFactor = -1;
+                }
+
+                if (center.getBlockY() < currentGoal.getBlockY()) {
+                    yFactor = 1;
+                } else if (center.getBlockY() > currentGoal.getBlockY()) {
+                    yFactor = -1;
+                }
+
+                if (center.getBlockZ() < currentGoal.getBlockZ()) {
+                    zFactor = 1;
+                } else if (center.getBlockZ() > currentGoal.getBlockZ()) {
+                    zFactor = -1;
+                }
+
+                platform.move(center.clone().add(xFactor, yFactor, zFactor));
+
+            }
+            else {
                 // The goal as been reached.
                 if (currentGoalIndex == getPath().size() - 1) {
                     // If I want to to just reverse:
@@ -38,31 +66,6 @@ public class ActivePath extends Path {
                     currentGoalIndex++;
                 }
             }
-            Location currentGoal = getPath().get(currentGoalIndex).getBlock().getLocation();
-            Location center = platform.getCenter().getBlock().getLocation();
-            int xFactor = 0;
-            int yFactor = 0;
-            int zFactor = 0;
-
-            if (center.getBlockX() < currentGoal.getBlockX()) {
-                xFactor = 1;
-            } else if (center.getBlockX() > currentGoal.getBlockX()) {
-                xFactor = -1;
-            }
-
-            if (center.getBlockY() < currentGoal.getBlockY()) {
-                yFactor = 1;
-            } else if (center.getBlockY() > currentGoal.getBlockY()) {
-                yFactor = -1;
-            }
-
-            if (center.getBlockZ() < currentGoal.getBlockZ()) {
-                zFactor = 1;
-            } else if (center.getBlockZ() > currentGoal.getBlockZ()) {
-                zFactor = -1;
-            }
-
-            platform.move(center.clone().add(xFactor, yFactor, zFactor));
         }
     }
 
