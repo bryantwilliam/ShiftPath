@@ -51,9 +51,9 @@ public class Platform {
             for (int y = smallestY; y <= biggestY; y++) {
                 for (int z = smallestZ; z <= biggestZ; z++) {
                     Block block = selection1.getWorld().getBlockAt(x, y, z);
-                    if (block != null && block.getType() != null && block.getType() != Material.AIR) {
+//                    if (block != null && block.getType() != null && block.getType() != Material.AIR) {
                         structure.add(block);
-                    }
+//                    }
                     centerX += x;
                     centerY += y;
                     centerZ += z;
