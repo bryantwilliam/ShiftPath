@@ -47,7 +47,6 @@ public class Platform {
         }
         int blockFrequency = 0;
         for (int x = smallestX; x <= biggestX; x++) {
-            System.out.println("x: " + x);
             for (int y = smallestY; y <= biggestY; y++) {
                 for (int z = smallestZ; z <= biggestZ; z++) {
                     Block block = selection1.getWorld().getBlockAt(x, y, z);
