@@ -48,6 +48,9 @@ public class Platform {
         System.out.println("smallestX: " + smallestX);
         System.out.println("smallestY: " + smallestY);
         System.out.println("smallestZ: " + smallestZ);
+        System.out.println("biggestX: " + biggestX);
+        System.out.println("biggestY: " + biggestY);
+        System.out.println("biggestZ: " + biggestZ);
         for (int x = smallestX; x <= biggestX; x++) {
             System.out.println("x: " + x);
             for (int y = smallestY; y <= biggestY; y++) {

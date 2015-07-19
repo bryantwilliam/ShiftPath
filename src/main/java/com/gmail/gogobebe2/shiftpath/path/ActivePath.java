@@ -27,7 +27,9 @@ public class ActivePath extends Path {
 
     public void approachNextPoint() {
         if (getPath().size() != 1) {
-            if (platform.getCenter().getBlock().getLocation().distance(getPath().get(currentGoalIndex).getBlock().getLocation()) == 0) {
+            Location center = platform.getCenter().getBlock().getLocation();
+
+            if (center.distance(getPath().get(currentGoalIndex).getBlock().getLocation()) == 0) {
                 // The goal as been reached.
                 if (currentGoalIndex == getPath().size() - 1) {
                     // If I want to to just reverse:
@@ -39,7 +41,6 @@ public class ActivePath extends Path {
                 }
             }
             Location currentGoal = getPath().get(currentGoalIndex).getBlock().getLocation();
-            Location center = platform.getCenter().getBlock().getLocation();
             int xFactor = 0;
             int yFactor = 0;
             int zFactor = 0;
