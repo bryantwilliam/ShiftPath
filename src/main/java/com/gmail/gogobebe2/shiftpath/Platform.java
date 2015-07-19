@@ -4,14 +4,14 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Platform {
     private Location selection1;
     private Location selection2;
     private Location center;
-    private Set<Block> structure = new HashSet<>();
+    private List<Block> structure = new ArrayList<>();
 
     public Platform(Location selection1, Location selection2) {
         this.selection1 = selection1;
@@ -45,40 +45,25 @@ public class Platform {
             biggestZ = selection2.getBlockZ();
             smallestZ = selection1.getBlockZ();
         }
-        System.out.println("smallestX: " + smallestX);
-        System.out.println("smallestY: " + smallestY);
-        System.out.println("smallestZ: " + smallestZ);
-        System.out.println("biggestX: " + biggestX);
-        System.out.println("biggestY: " + biggestY);
-        System.out.println("biggestZ: " + biggestZ);
         int blockFrequency = 0;
         for (int x = smallestX; x <= biggestX; x++) {
             System.out.println("x: " + x);
             for (int y = smallestY; y <= biggestY; y++) {
-                System.out.println("y: " + y);
                 for (int z = smallestZ; z <= biggestZ; z++) {
-                    System.out.println("z: " + z);
                     Block block = selection1.getWorld().getBlockAt(x, y, z);
                     if (block.getType() != Material.AIR) {
-                        System.out.println("added");
                         structure.add(block);
                     }
                     centerX += x;
                     centerY += y;
                     centerZ += z;
                     blockFrequency++;
-                    System.out.println("centerX: " + centerX);
-                    System.out.println("centerY: " + centerY);
-                    System.out.println("centerZ: " + centerZ);
                 }
             }
         }
         if (centerX != 0) centerX /= blockFrequency;
         if (centerY != 0) centerY /= blockFrequency;
         if (centerZ != 0) centerZ /= blockFrequency;
-        System.out.println("final centerX: " + centerX);
-        System.out.println("final centerY: " + centerY);
-        System.out.println("final centerZ: " + centerZ);
         this.center = selection1.getWorld().getBlockAt(centerX, centerY, centerZ).getLocation();
     }
 
@@ -87,7 +72,7 @@ public class Platform {
         int yDistance = destination.getBlockY() - center.getBlockY();
         int zDistance = destination.getBlockZ() - center.getBlockZ();
 
-        Set<Block> newStructure = new HashSet<>();
+        List<Block> newStructure = new ArrayList<>();
         for (Block oldBlock : structure) {
             Block newBlock = oldBlock.getWorld().getBlockAt(oldBlock.getLocation().clone().add(xDistance, yDistance, zDistance));
             newBlock.setType(oldBlock.getType());
