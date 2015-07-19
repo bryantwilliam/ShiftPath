@@ -1,5 +1,7 @@
 package com.gmail.gogobebe2.shiftpath;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -49,7 +51,7 @@ public class Platform {
             for (int y = smallestY; y <= biggestY; y++) {
                 for (int z = smallestZ; z <= biggestZ; z++) {
                     Block block = selection1.getWorld().getBlockAt(x, y, z);
-                    if (block.getType() != Material.AIR) {
+                    if (block != null && block.getType() != null && block.getType() != Material.AIR) {
                         structure.add(block);
                     }
                     centerX += x;
@@ -58,9 +60,14 @@ public class Platform {
                 }
             }
         }
-        if (centerX != 0) centerX /= structure.size();
-        if (centerY != 0) centerY /= structure.size();
-        if (centerZ != 0) centerZ /= structure.size();
+        if (structure.size() != 0) {
+            if (centerX != 0) centerX /= structure.size();
+            if (centerY != 0) centerY /= structure.size();
+            if (centerZ != 0) centerZ /= structure.size();
+        }
+        else {
+            Bukkit.broadcastMessage(ChatColor.RED + "Error! Platform can not have a size of 0! (This can be caused from no blocks (air) on selected region)");
+        }
         this.center = selection1.getWorld().getBlockAt(centerX, centerY, centerZ).getLocation();
     }
 
