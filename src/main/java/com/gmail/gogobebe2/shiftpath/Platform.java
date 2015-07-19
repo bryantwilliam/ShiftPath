@@ -51,6 +51,7 @@ public class Platform {
         System.out.println("biggestX: " + biggestX);
         System.out.println("biggestY: " + biggestY);
         System.out.println("biggestZ: " + biggestZ);
+        int blockFrequency = 0;
         for (int x = smallestX; x <= biggestX; x++) {
             System.out.println("x: " + x);
             for (int y = smallestY; y <= biggestY; y++) {
@@ -65,15 +66,16 @@ public class Platform {
                     centerX += x;
                     centerY += y;
                     centerZ += z;
+                    blockFrequency++;
                     System.out.println("centerX: " + centerX);
                     System.out.println("centerY: " + centerY);
                     System.out.println("centerZ: " + centerZ);
                 }
             }
         }
-        if (centerX != 0) centerX /= structure.size();
-        if (centerY != 0) centerY /= structure.size();
-        if (centerZ != 0) centerZ /= structure.size();
+        if (centerX != 0) centerX /= blockFrequency;
+        if (centerY != 0) centerY /= blockFrequency;
+        if (centerZ != 0) centerZ /= blockFrequency;
         System.out.println("final centerX: " + centerX);
         System.out.println("final centerY: " + centerY);
         System.out.println("final centerZ: " + centerZ);
