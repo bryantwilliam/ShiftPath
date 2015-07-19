@@ -22,6 +22,9 @@ public class ShiftPath extends JavaPlugin {
     @Override
     public void onEnable() {
         getLogger().info("Starting up ShiftPath. If you need me to update this plugin, email at gogobebe2@gmail.com");
+        for (World world : Bukkit.getWorlds()) {
+            world.setAutoSave(false);
+        }
         saveDefaultConfig();
         createWand();
         Bukkit.getPluginManager().registerEvents(new SelectionListener(this), this);
@@ -38,9 +41,6 @@ public class ShiftPath extends JavaPlugin {
                     }
                 }
             }, 0L, 20L);
-        }
-        for (World world : Bukkit.getWorlds()) {
-            world.setAutoSave(false);
         }
 
         TreeMap<Integer, String> as = new TreeMap<>();
