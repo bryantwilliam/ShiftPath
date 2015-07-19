@@ -1,7 +1,5 @@
 package com.gmail.gogobebe2.shiftpath;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -47,27 +45,32 @@ public class Platform {
             biggestZ = selection2.getBlockZ();
             smallestZ = selection1.getBlockZ();
         }
+        System.out.println("smallestX: " + smallestX);
+        System.out.println("smallestY: " + smallestY);
+        System.out.println("smallestZ: " + smallestZ);
         for (int x = smallestX; x <= biggestX; x++) {
+            System.out.println("x: " + x);
             for (int y = smallestY; y <= biggestY; y++) {
+                System.out.println("y: " + y);
                 for (int z = smallestZ; z <= biggestZ; z++) {
+                    System.out.println("z: " + z);
                     Block block = selection1.getWorld().getBlockAt(x, y, z);
-//                    if (block != null && block.getType() != null && block.getType() != Material.AIR) {
+                    if (block.getType() != Material.AIR) {
+                        System.out.println("added");
                         structure.add(block);
-//                    }
+                    }
                     centerX += x;
                     centerY += y;
                     centerZ += z;
+                    System.out.println("centerX: " + centerX);
+                    System.out.println("centerY: " + centerY);
+                    System.out.println("centerZ: " + centerZ);
                 }
             }
         }
-        if (structure.size() != 0) {
-            if (centerX != 0) centerX /= structure.size();
-            if (centerY != 0) centerY /= structure.size();
-            if (centerZ != 0) centerZ /= structure.size();
-        }
-        else {
-            Bukkit.broadcastMessage(ChatColor.RED + "Error! Platform can not have a size of 0! (This can be caused from no blocks (air) on selected region)");
-        }
+        if (centerX != 0) centerX /= structure.size();
+        if (centerY != 0) centerY /= structure.size();
+        if (centerZ != 0) centerZ /= structure.size();
         this.center = selection1.getWorld().getBlockAt(centerX, centerY, centerZ).getLocation();
     }
 
