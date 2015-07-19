@@ -74,6 +74,9 @@ public class Platform {
         if (centerX != 0) centerX /= structure.size();
         if (centerY != 0) centerY /= structure.size();
         if (centerZ != 0) centerZ /= structure.size();
+        System.out.println("final centerX: " + centerX);
+        System.out.println("final centerY: " + centerY);
+        System.out.println("final centerZ: " + centerZ);
         this.center = selection1.getWorld().getBlockAt(centerX, centerY, centerZ).getLocation();
     }
 
