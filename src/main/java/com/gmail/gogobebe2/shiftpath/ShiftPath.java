@@ -14,19 +14,25 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.*;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class ShiftPath extends JavaPlugin {
     private static final ItemStack WAND = createWand();
+    private static final String WORLD_LOCATION_CONFIG_PATH = "Immutable world file path";
 
     @Override
     public void onEnable() {
         getLogger().info("Starting up ShiftPath. If you need me to update this plugin, email at gogobebe2@gmail.com");
         for (World world : Bukkit.getWorlds()) {
             world.setAutoSave(false);
+            // This isn't working on this guy's host. So I ended up implementing resetWorld.
+            // I'm going to keep this here anyway.
         }
+
         saveDefaultConfig();
-        createWand();
         Bukkit.getPluginManager().registerEvents(new SelectionListener(this), this);
 
         if (getConfig().isSet("Paths")) {
@@ -42,16 +48,54 @@ public class ShiftPath extends JavaPlugin {
                 }
             }, 0L, 20L);
         }
-
-        TreeMap<Integer, String> as = new TreeMap<>();
-        Arrays.sort(as.keySet().toArray());
     }
-
 
     @Override
     public void onDisable() {
         getLogger().info("Disabling ShiftPath. If you need me to update this plugin, email at gogobebe2@gmail.com");
+        for (World world : Bukkit.getWorlds()) {
+            resetWorld(world, this);
+        }
     }
+
+    private static void resetWorld(World world, ShiftPath plugin) {
+        try {
+            File f1;
+            if (plugin.getConfig().isSet(WORLD_LOCATION_CONFIG_PATH)) {
+                f1 = new File(plugin.getConfig().getString(WORLD_LOCATION_CONFIG_PATH));
+            }
+            else {
+                throw new NullPointerException("No world in world path!");
+            }
+
+            File f2 = new File(world.getWorldFolder().getPath());
+            Bukkit.unloadWorld(world, true);
+            InputStream in = new FileInputStream(f1);
+
+            //For Append the file.
+            //OutputStream out = new FileOutputStream(f2, true);
+
+            //For Overwrite the file.
+            OutputStream out = new FileOutputStream(f2);
+
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = in.read(buf)) > 0){
+                out.write(buf, 0, len);
+            }
+            in.close();
+            out.close();
+            plugin.getLogger().info(f1.getName() + " file copied to " + f2.getName());
+        }
+        catch(FileNotFoundException ex){
+            plugin.getLogger().severe(ex.getMessage() + " in the specified directory.");
+        }
+        catch (NullPointerException | IOException ex) {
+            plugin.getLogger().severe(ex.getMessage());
+        }
+    }
+
+
 
 
     private static ItemStack createWand() {

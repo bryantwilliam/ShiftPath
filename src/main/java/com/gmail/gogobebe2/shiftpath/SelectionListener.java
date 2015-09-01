@@ -40,5 +40,4 @@ public class SelectionListener implements Listener {
             }
         }
     }
-
 }
