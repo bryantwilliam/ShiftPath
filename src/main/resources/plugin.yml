@@ -6,7 +6,7 @@ author: William Bryant (gogobebe2)
 website: gogobebe2@gmail.com
 commands:
   shiftpath:
-    description: Create plateforms of 2, 3 or 4 size and set a path they go through.
+    description: Part of the Shift minigame. Allows the ability to create and set paths of defined platforms.
     aliases: [sp]
 permissions:
   shiftpath.*:
