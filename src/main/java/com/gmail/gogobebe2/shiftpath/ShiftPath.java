@@ -67,7 +67,9 @@ public class ShiftPath extends JavaPlugin {
             Bukkit.unloadWorld(world, true);
             for (File file : destination.listFiles()) {
                 if (file.listFiles() == null) {
-                    file.delete();
+                    if (!file.delete()) {
+                        throw new IOException("Cannot delete " + file.getName());
+                    }
                 }
                 else {
                     FileUtils.deleteDirectory(file);
