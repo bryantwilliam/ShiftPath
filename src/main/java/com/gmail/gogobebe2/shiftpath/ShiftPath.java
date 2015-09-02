@@ -28,11 +28,6 @@ public class ShiftPath extends JavaPlugin {
     @Override
     public void onEnable() {
         getLogger().info("Starting up ShiftPath. If you need me to update this plugin, email at gogobebe2@gmail.com");
-        for (World world : Bukkit.getWorlds()) {
-            world.setAutoSave(false);
-            // This isn't working on this guy's host. So I ended up implementing resetWorld.
-            // I'm going to keep this here anyway.
-        }
 
         saveDefaultConfig();
         Bukkit.getPluginManager().registerEvents(new SelectionListener(this), this);
