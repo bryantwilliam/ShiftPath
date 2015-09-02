@@ -2,6 +2,7 @@ package com.gmail.gogobebe2.shiftpath;
 
 import com.gmail.gogobebe2.shiftpath.path.ActivePath;
 import com.gmail.gogobebe2.shiftpath.path.PathInConstruction;
+import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -13,9 +14,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.FileUtil;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,35 +62,26 @@ public class ShiftPath extends JavaPlugin {
 
     private static void resetWorld(World world, ShiftPath plugin) {
         try {
-            File f1;
+            File constantWorld;
             if (plugin.getConfig().isSet(WORLD_LOCATION_CONFIG_PATH)) {
-                f1 = new File(plugin.getConfig().getString(WORLD_LOCATION_CONFIG_PATH));
+                constantWorld = new File(plugin.getConfig().getString(WORLD_LOCATION_CONFIG_PATH));
             }
             else {
                 throw new NullPointerException("No world in world path!");
             }
 
-            File f2 = new File(world.getWorldFolder().getPath());
             Bukkit.unloadWorld(world, true);
-            deleteDir(f2);
+            FileUtils.deleteDirectory(new File(world.getWorldFolder().getPath()));
 
-            FileUtil.copy(f1, f2);
-            plugin.getLogger().info(f1.getName() + " file copied to " + f2.getName());
+            File destination = new File("/");
+
+            FileUtils.copyDirectoryToDirectory(constantWorld, destination);
+            plugin.getLogger().info(constantWorld.getName() + " file copied to " + destination.getName());
         }
         catch (NullPointerException ex) {
             plugin.getLogger().severe(ex.getMessage());
-        }
-    }
-
-    private static void deleteDir(File file){
-        if (!file.delete()) {
-            File[] contents = file.listFiles();
-            if (contents != null) {
-                for (File f : contents) {
-                    deleteDir(f);
-                }
-            }
-            file.delete();
+        } catch (IOException ex) {
+            plugin.getLogger().severe(ex.getMessage());
         }
     }
 
