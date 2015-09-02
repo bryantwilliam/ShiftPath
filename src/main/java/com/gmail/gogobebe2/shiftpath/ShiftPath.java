@@ -66,7 +66,12 @@ public class ShiftPath extends JavaPlugin {
 
             Bukkit.unloadWorld(world, true);
             for (File file : destination.listFiles()) {
-                FileUtils.deleteDirectory(file);
+                if (file.listFiles() == null) {
+                    file.delete();
+                }
+                else {
+                    FileUtils.deleteDirectory(file);
+                }
             }
 
             File constantWorld;
@@ -78,7 +83,12 @@ public class ShiftPath extends JavaPlugin {
             }
 
             for (File file : constantWorld.listFiles()) {
-                FileUtils.copyFileToDirectory(file, destination);
+                if (file.listFiles() == null) {
+                    FileUtils.copyFileToDirectory(file, destination);
+                }
+                else {
+                    FileUtils.copyDirectoryToDirectory(file, destination);
+                }
             }
 
             plugin.getLogger().info("contents of " + constantWorld.getName() + " copied into to " + destination.getName());
