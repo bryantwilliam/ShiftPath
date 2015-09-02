@@ -24,6 +24,7 @@ import java.util.List;
 public class ShiftPath extends JavaPlugin {
     private static final ItemStack WAND = createWand();
     private static final String WORLD_LOCATION_CONFIG_PATH = "Immutable world file path";
+    private static final String SPEED_OF_PLATFORMS_CONFIG_PATH = "Speed of platforms (in ticks)";
 
     @Override
     public void onEnable() {
@@ -43,7 +44,7 @@ public class ShiftPath extends JavaPlugin {
                         activePath.approachNextPoint();
                     }
                 }
-            }, 0L, 20L);
+            }, 0L, getConfig().getLong(SPEED_OF_PLATFORMS_CONFIG_PATH));
         }
     }
 
