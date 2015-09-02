@@ -78,9 +78,7 @@ public class ShiftPath extends JavaPlugin {
             FileUtils.copyDirectoryToDirectory(constantWorld, destination);
             plugin.getLogger().info(constantWorld.getName() + " file copied to " + destination.getName());
         }
-        catch (NullPointerException ex) {
-            plugin.getLogger().severe(ex.getMessage());
-        } catch (IOException ex) {
+        catch (NullPointerException | IOException ex) {
             plugin.getLogger().severe(ex.getMessage());
         }
     }
