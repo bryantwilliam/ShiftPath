@@ -73,7 +73,7 @@ public class ShiftPath extends JavaPlugin {
             Bukkit.unloadWorld(world, true);
             FileUtils.deleteDirectory(new File(world.getWorldFolder().getPath()));
 
-            File destination = new File("/");
+            File destination = new File("");
 
             FileUtils.copyDirectoryToDirectory(constantWorld, destination);
             plugin.getLogger().info(constantWorld.getName() + " file copied to " + destination.getName());
