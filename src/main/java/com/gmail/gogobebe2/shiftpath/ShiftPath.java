@@ -76,7 +76,7 @@ public class ShiftPath extends JavaPlugin {
                 throw new NullPointerException("No world in world path!");
             }
 
-            String[] splitPath = WORLD_LOCATION_CONFIG_PATH.split("/");
+            String[] splitPath = constantWorld.getName().split("/");
             File destination = new File(splitPath[splitPath.length - 1]);
 
             for (Object f : FileUtils.listFiles(constantWorld, null, false)) {
