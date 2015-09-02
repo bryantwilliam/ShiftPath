@@ -13,8 +13,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.util.FileUtil;
 
-import java.io.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -70,32 +71,27 @@ public class ShiftPath extends JavaPlugin {
 
             File f2 = new File(world.getWorldFolder().getPath());
             Bukkit.unloadWorld(world, true);
-            InputStream in = new FileInputStream(f1);
+            deleteDir(f2);
 
-            //For Append the file.
-            //OutputStream out = new FileOutputStream(f2, true);
-
-            //For Overwrite the file.
-            OutputStream out = new FileOutputStream(f2);
-
-            byte[] buf = new byte[1024];
-            int len;
-            while ((len = in.read(buf)) > 0){
-                out.write(buf, 0, len);
-            }
-            in.close();
-            out.close();
+            FileUtil.copy(f1, f2);
             plugin.getLogger().info(f1.getName() + " file copied to " + f2.getName());
         }
-        catch(FileNotFoundException ex){
-            plugin.getLogger().severe(ex.getMessage() + " in the specified directory.");
-        }
-        catch (NullPointerException | IOException ex) {
+        catch (NullPointerException ex) {
             plugin.getLogger().severe(ex.getMessage());
         }
     }
 
-
+    private static void deleteDir(File file){
+        if (!file.delete()) {
+            File[] contents = file.listFiles();
+            if (contents != null) {
+                for (File f : contents) {
+                    deleteDir(f);
+                }
+            }
+            file.delete();
+        }
+    }
 
 
     private static ItemStack createWand() {
