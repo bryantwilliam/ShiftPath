@@ -56,18 +56,19 @@ public class ShiftPath extends JavaPlugin {
     public void onDisable() {
         getLogger().info("Disabling ShiftPath. If you need me to update this plugin, email at gogobebe2@gmail.com");
         for (World world : Bukkit.getWorlds()) {
-            Bukkit.unloadWorld(world, true);
-            try {
-                FileUtils.deleteDirectory(new File(world.getWorldFolder().getPath()));
-            } catch (IOException ex) {
-                getLogger().severe(ex.getMessage());
-            }
+            resetWorld(world, this);
         }
-        resetWorld(this);
     }
 
-    private static void resetWorld(ShiftPath plugin) {
+    private static void resetWorld(World world, ShiftPath plugin) {
         try {
+            File destination = world.getWorldFolder();
+
+            Bukkit.unloadWorld(world, true);
+            for (File file : destination.listFiles()) {
+                FileUtils.deleteDirectory(file);
+            }
+
             File constantWorld;
             if (plugin.getConfig().isSet(WORLD_LOCATION_CONFIG_PATH)) {
                 constantWorld = new File(plugin.getConfig().getString(WORLD_LOCATION_CONFIG_PATH));
@@ -76,12 +77,8 @@ public class ShiftPath extends JavaPlugin {
                 throw new NullPointerException("No world in world path!");
             }
 
-            String[] splitPath = constantWorld.getName().split("/");
-            File destination = new File(splitPath[splitPath.length - 1]);
-
-            for (Object f : FileUtils.listFiles(constantWorld, null, false)) {
-                File file = (File) f;
-                FileUtils.copyDirectoryToDirectory(file, destination);
+            for (File file : constantWorld.listFiles()) {
+                FileUtils.copyFileToDirectory(file, destination);
             }
 
             plugin.getLogger().info("contents of " + constantWorld.getName() + " copied into to " + destination.getName());
