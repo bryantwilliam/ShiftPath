@@ -76,10 +76,15 @@ public class ShiftPath extends JavaPlugin {
                 throw new NullPointerException("No world in world path!");
             }
 
-            File destination = new File("WORLDS");
+            String[] splitPath = WORLD_LOCATION_CONFIG_PATH.split("/");
+            File destination = new File(splitPath[splitPath.length - 1]);
 
-            FileUtils.copyDirectoryToDirectory(constantWorld, destination);
-            plugin.getLogger().info(constantWorld.getName() + " file copied to " + destination.getName());
+            for (Object f : FileUtils.listFiles(constantWorld, null, false)) {
+                File file = (File) f;
+                FileUtils.copyDirectoryToDirectory(file, destination);
+            }
+
+            plugin.getLogger().info("contents of " + constantWorld.getName() + " copied into to " + destination.getName());
         }
         catch (NullPointerException | IOException ex) {
             plugin.getLogger().severe(ex.getMessage());
