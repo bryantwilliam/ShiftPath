@@ -126,8 +126,6 @@ public class ShiftPath extends JavaPlugin {
                 player.sendMessage("After you've selected your regions and paths with the wand, use "
                         + ChatColor.GREEN + "/sp set"
                         + ChatColor.RESET + " and restart the server for it to take effect.");
-                player.sendMessage("If you make a change to the world you want to save, type " + ChatColor.GREEN
-                        + "/saveworld" + ChatColor.RESET + " after.");
                 return true;
             }  else if (args[0].equalsIgnoreCase("set")) {
                 if (PathInConstruction.getPathInProgress(player, this).save()) {
